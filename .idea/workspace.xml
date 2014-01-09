@@ -67,10 +67,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CrappaLinks.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="CrappaLinks.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/germainz/crappalinks/CrappaLinks.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="0" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.67241377" vertical-offset="0" max-vertical-offset="765">
+            <state line="26" column="0" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1687#1688#0" expanded="true" />
@@ -79,10 +79,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="20" selection-start="641" selection-end="641" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
+            <state line="20" column="20" selection-start="641" selection-end="641" vertical-scroll-proportion="0.51724136" vertical-offset="0" max-vertical-offset="580">
               <folding>
                 <element signature="e#342#360#0" expanded="true" />
               </folding>
@@ -535,21 +535,21 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/src/com/germainz/crappalinks/CrappaLinks.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="20" selection-start="641" selection-end="641" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
+        <state line="26" column="0" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
           <folding>
-            <element signature="e#342#360#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1687#1688#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/germainz/crappalinks/CrappaLinks.java">
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.67241377" vertical-offset="0" max-vertical-offset="765">
+        <state line="20" column="20" selection-start="641" selection-end="641" vertical-scroll-proportion="0.51724136" vertical-offset="0" max-vertical-offset="580">
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1687#1688#0" expanded="true" />
+            <element signature="e#342#360#0" expanded="true" />
           </folding>
         </state>
       </provider>
