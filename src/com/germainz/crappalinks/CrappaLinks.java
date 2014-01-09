@@ -17,24 +17,27 @@ public class CrappaLinks implements IXposedHookLoadPackage {
 	@Override
 	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
         String pkg = lpparam.packageName;
-		if (!pkg.equals("com.quoord.tapatalkpro.activity") && !pkg.equals("com.quoord.tapatalkHD")) {
+		if (!pkg.equals("com.quoord.tapatalkpro.activity") && !pkg.equals("com.quoord.tapatalkHD"))
             return;
-        }
 
         final Class<?> TagHandler = findClass("com.quoord.tapatalkpro.adapter.forum.MessageContentAdapter", lpparam.classLoader);
-        findAndHookMethod(TagHandler, "doVglink", String.class, new XC_MethodReplacement() {
+        doHookMethod(TagHandler, "doVglink");
+        // Not sure when doSkimlik is called instead of doVglink, it's never happened with me but better safe than sorry
+        // both methods take the same argument so we can replace them with the same method
+        doHookMethod(TagHandler, "doSkimlik");
+    }
+
+    private void doHookMethod(final Class<?> TagHandler, String method) {
+        findAndHookMethod(TagHandler, method, String.class, new XC_MethodReplacement() {
             @Override
             protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
-                String s = (String) param.args[0];
+                String s = (String) param.args[0]; // this is the original URL
                 Activity mContext = (Activity) getObjectField(param.thisObject, "mContext");
                 Intent intent;
                 intent = new Intent("android.intent.action.VIEW", Uri.parse(s));
-                try
-                {
+                try {
                     mContext.startActivity(intent);
-                }
-                catch(Exception exception)
-                {
+                } catch(Exception exception) {
                     exception.printStackTrace();
                 }
                 return null;
