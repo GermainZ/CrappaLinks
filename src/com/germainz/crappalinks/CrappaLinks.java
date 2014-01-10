@@ -17,14 +17,21 @@ public class CrappaLinks implements IXposedHookLoadPackage {
 	@Override
 	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
         String pkg = lpparam.packageName;
-		if (!pkg.equals("com.quoord.tapatalkpro.activity") && !pkg.equals("com.quoord.tapatalkHD"))
+		if (!pkg.equals("com.quoord.tapatalkpro.activity") &&
+                !pkg.equals("com.quoord.tapatalkHD") &&
+                !pkg.equals("com.quoord.tapatalkxdapre.activity"))
             return;
-
         final Class<?> TagHandler = findClass("com.quoord.tapatalkpro.adapter.forum.MessageContentAdapter", lpparam.classLoader);
+        // Not sure when openUrlBySkimlink/doSkimlik are called instead of openUrlByVglink/doVglink,
+        // it's never happened with me but better safe than sorry. Both methods take the same
+        // argument so we can replace them with the same method.
+        if (pkg.equals("com.quoord.tapatalkxdapre.activity")) {
+            doHookMethod(TagHandler, "openUrlBySkimlink");
+            doHookMethod(TagHandler, "openUrlByViglink");
+        } else {
         doHookMethod(TagHandler, "doVglink");
-        // Not sure when doSkimlik is called instead of doVglink, it's never happened with me but better safe than sorry
-        // both methods take the same argument so we can replace them with the same method
         doHookMethod(TagHandler, "doSkimlik");
+        }
     }
 
     private void doHookMethod(final Class<?> TagHandler, String method) {
@@ -37,12 +44,13 @@ public class CrappaLinks implements IXposedHookLoadPackage {
                 intent = new Intent("android.intent.action.VIEW", Uri.parse(s));
                 try {
                     mContext.startActivity(intent);
-                } catch(Exception exception) {
+                } catch (Exception exception) {
                     exception.printStackTrace();
                 }
                 return null;
             }
         });
     }
+
 }
 
