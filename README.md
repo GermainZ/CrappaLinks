@@ -1,6 +1,10 @@
 CrappaLinks
 ===========
-Xposed module that removes TapaTalk's link masking.
+Xposed module that removes link masking/tracking from various apps:
+* TapaTalk
+* TapaTalk Pro
+* XDA Premium (v4+)
+* Google Play Store
 
 Download Module
 ===============
