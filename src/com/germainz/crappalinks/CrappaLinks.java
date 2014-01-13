@@ -3,34 +3,53 @@ package com.germainz.crappalinks;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+
+import org.json.JSONArray;
+
+import java.util.ArrayList;
 
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 import static de.robv.android.xposed.XposedHelpers.getObjectField;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class CrappaLinks implements IXposedHookLoadPackage {
 
-	@Override
-	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
+    @Override
+    public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
         String pkg = lpparam.packageName;
-		if (!pkg.equals("com.quoord.tapatalkpro.activity") &&
-                !pkg.equals("com.quoord.tapatalkHD") &&
-                !pkg.equals("com.quoord.tapatalkxdapre.activity"))
-            return;
-        final Class<?> TagHandler = findClass("com.quoord.tapatalkpro.adapter.forum.MessageContentAdapter", lpparam.classLoader);
-        // Not sure when openUrlBySkimlink/doSkimlik are called instead of openUrlByVglink/doVglink,
-        // it's never happened with me but better safe than sorry. Both methods take the same
-        // argument so we can replace them with the same method.
-        if (pkg.equals("com.quoord.tapatalkxdapre.activity")) {
-            doHookMethod(TagHandler, "openUrlBySkimlink");
-            doHookMethod(TagHandler, "openUrlByViglink");
-        } else {
-        doHookMethod(TagHandler, "doVglink");
-        doHookMethod(TagHandler, "doSkimlik");
+        if (pkg.equals("com.quoord.tapatalkpro.activity") ||
+                pkg.equals("com.quoord.tapatalkHD") ||
+                pkg.equals("com.quoord.tapatalkxdapre.activity")) {
+            final Class<?> TagHandler = findClass("com.quoord.tapatalkpro.adapter.forum.MessageContentAdapter", lpparam.classLoader);
+            // Not sure when openUrlBySkimlink/doSkimlik are called instead of openUrlByVglink/doVglink,
+            // it's never happened with me but better safe than sorry. Both methods take the same
+            // argument so we can replace them with the same method.
+            if (pkg.equals("com.quoord.tapatalkxdapre.activity")) {
+                doHookMethod(TagHandler, "openUrlBySkimlink");
+                doHookMethod(TagHandler, "openUrlByViglink");
+            } else {
+                doHookMethod(TagHandler, "doVglink");
+                doHookMethod(TagHandler, "doSkimlik");
+            }
+        } else if (pkg.equals("com.android.vending")) {
+            final Class<?> TagHandler = findClass("com.google.android.finsky.api.model.Document", lpparam.classLoader);
+            findAndHookMethod(TagHandler, "getRawDescription", new XC_MethodHook() {
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    String s = (String) param.getResult();
+                    s = s.replaceAll("<a href=\"https://www\\.google\\.com/url\\?q=", "<a href=\"");
+                    s = s.replaceAll("&amp;sa=[^\"]*\"", "\"");
+                    param.setResult(s);
+                }
+            });
         }
     }
 
