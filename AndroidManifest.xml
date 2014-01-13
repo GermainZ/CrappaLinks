@@ -18,7 +18,7 @@
             android:value="2.0*" />
         <meta-data
             android:name="xposeddescription"
-            android:value="Removes TapaTalk link masking" />
+            android:value="Removes crappy link masking/tracking from various apps" />
     </application>
 
 </manifest>
