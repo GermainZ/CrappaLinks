@@ -1,14 +1,14 @@
 package com.germainz.crappalinks;
 
 import android.app.Activity;
+import android.app.AndroidAppHelper;
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
 
-import org.json.JSONArray;
-
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
@@ -33,28 +33,72 @@ public class CrappaLinks implements IXposedHookLoadPackage {
             // it's never happened with me but better safe than sorry. Both methods take the same
             // argument so we can replace them with the same method.
             if (pkg.equals("com.quoord.tapatalkxdapre.activity")) {
-                doHookMethod(TagHandler, "openUrlBySkimlink");
-                doHookMethod(TagHandler, "openUrlByViglink");
+                hookCrappaTalk(TagHandler, "openUrlBySkimlink");
+                hookCrappaTalk(TagHandler, "openUrlByViglink");
             } else {
-                doHookMethod(TagHandler, "doVglink");
-                doHookMethod(TagHandler, "doSkimlik");
+                hookCrappaTalk(TagHandler, "doVglink");
+                hookCrappaTalk(TagHandler, "doSkimlik");
             }
         } else if (pkg.equals("com.android.vending")) {
             final Class<?> TagHandler = findClass("com.google.android.finsky.api.model.Document", lpparam.classLoader);
+            final Class<?> TagHandler2 = findClass("com.google.android.play.layout.PlayTextView$SelfishUrlSpan", lpparam.classLoader);
             findAndHookMethod(TagHandler, "getRawDescription", new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    // I should probably find a way to do the changes when the link is actually clicked,
+                    // possibly in com.google.android.play.layout.PlayTextView$SelfishUrlSpan
                     String s = (String) param.getResult();
                     s = s.replaceAll("<a href=\"https://www\\.google\\.com/url\\?q=", "<a href=\"");
                     s = s.replaceAll("&amp;sa=[^\"]*\"", "\"");
                     param.setResult(s);
                 }
             });
+        } else if (pkg.equals("com.facebook.katana")) {
+            final Class<?> TagHandler = findClass("com.facebook.katana.urimap.Fb4aUriIntentMapper", lpparam.classLoader);
+            final Class<?> TagHandler2 = findClass("com.facebook.intent.ufiservices.DefaultUriIntentGenerator", lpparam.classLoader);
+            findAndHookMethod(TagHandler, "a", Context.class, String.class, new XC_MethodHook() {
+                // This method returns an intent generated from the masked uri, if the Facebook app
+                // can't handle it (external links.)
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    Intent intent = (Intent) param.getResult();
+                    String uri = unmaskFacebook((String) param.args[1]);
+                    intent.setData(Uri.parse(uri));
+                    param.setResult(intent);
+                }
+            });
+            findAndHookMethod(TagHandler2, "a", String.class, new XC_MethodHook() {
+                // This method launches an intent to view the given string, without doing any checks.
+                // So we just have to the given argument.
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    param.args[0] = unmaskFacebook((String) param.args[0]);
+                }
+            });
         }
     }
-
-    private void doHookMethod(final Class<?> TagHandler, String method) {
+    private String unmaskFacebook(String s) {
+        // masked links look like (http|https)://m.facebook.com/l.php?u=<actual_link>&h=<some_token>
+        if (!s.startsWith("http://m.facebook.com/l.php?u=") &&
+                !s.startsWith("https://m.facebook.com/l.php?u=")) {
+            XposedBridge.log("CRAPPALINKS >>> Returning string without modifications: " + s);
+            return s; // it's not an external link, we shouldn't mess with it
+        }
+        s = s.replaceAll("^https?://m\\.facebook\\.com/l\\.php\\?u=", "");
+        s = s.replaceAll("&h.*$", "");
+        try {
+            s = URLDecoder.decode(s, "UTF-8");
+            XposedBridge.log("CRAPPALINKS >>> URL unmasked! " + s);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            XposedBridge.log("CRAPPALINKS >>> UnsupportedEncodingException :(");
+        }
+        return s;
+    }
+    private void hookCrappaTalk(final Class<?> TagHandler, String method) {
         findAndHookMethod(TagHandler, method, String.class, new XC_MethodReplacement() {
+            // These methods all take the unmasked link as their argument, and launch and intent to
+            // view it after masking it.
             @Override
             protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
                 String s = (String) param.args[0]; // this is the original URL
