@@ -77,24 +77,22 @@ public class CrappaLinks implements IXposedHookLoadPackage {
             });
         }
     }
+
     private String unmaskFacebook(String s) {
         // masked links look like (http|https)://m.facebook.com/l.php?u=<actual_link>&h=<some_token>
         if (!s.startsWith("http://m.facebook.com/l.php?u=") &&
-                !s.startsWith("https://m.facebook.com/l.php?u=")) {
-            XposedBridge.log("CRAPPALINKS >>> Returning string without modifications: " + s);
+                !s.startsWith("https://m.facebook.com/l.php?u="))
             return s; // it's not an external link, we shouldn't mess with it
-        }
         s = s.replaceAll("^https?://m\\.facebook\\.com/l\\.php\\?u=", "");
         s = s.replaceAll("&h.*$", "");
         try {
             s = URLDecoder.decode(s, "UTF-8");
-            XposedBridge.log("CRAPPALINKS >>> URL unmasked! " + s);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            XposedBridge.log("CRAPPALINKS >>> UnsupportedEncodingException :(");
         }
         return s;
     }
+
     private void hookCrappaTalk(final Class<?> TagHandler, String method) {
         findAndHookMethod(TagHandler, method, String.class, new XC_MethodReplacement() {
             // These methods all take the unmasked link as their argument, and launch and intent to
