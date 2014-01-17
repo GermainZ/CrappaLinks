@@ -5,6 +5,8 @@ Xposed module that removes link masking/tracking from various apps:
 * TapaTalk Pro
 * XDA Premium (v4+)
 * Google Play Store
+* Facebook
+* Vk
 
 Download Module
 ===============
