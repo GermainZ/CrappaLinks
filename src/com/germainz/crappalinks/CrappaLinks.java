@@ -17,7 +17,6 @@ import static de.robv.android.xposed.XposedHelpers.getObjectField;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class CrappaLinks implements IXposedHookLoadPackage {
@@ -73,6 +72,25 @@ public class CrappaLinks implements IXposedHookLoadPackage {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     param.args[0] = unmaskFacebook((String) param.args[0]);
+                }
+            });
+        } else if (pkg.equals("com.vkontakte.android")) {
+            final Class<?> TagHandler = findClass("com.vkontakte.android.LinkRedirActivity", lpparam.classLoader);
+            findAndHookMethod(TagHandler, "openBrowser", Uri.class, new XC_MethodReplacement() {
+                // This method takes one argument, the unmasked link, and generates an intent for it.
+                @Override
+                protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+                    Uri uri = (Uri) param.args[0];
+                    Intent intent;
+                    intent = new Intent("android.intent.action.VIEW", uri);
+                    intent = intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Application app = AndroidAppHelper.currentApplication();
+                    try {
+                        app.startActivity(intent);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                    return null;
                 }
             });
         }
