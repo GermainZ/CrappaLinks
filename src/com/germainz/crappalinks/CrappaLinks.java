@@ -93,6 +93,15 @@ public class CrappaLinks implements IXposedHookLoadPackage {
                     return null;
                 }
             });
+        } else if (pkg.equals("com.alphascope")) {
+            final Class<?> TagHandler = findClass("com.alphascope.lib.util.ViglinkLinkify", lpparam.classLoader);
+            findAndHookMethod(TagHandler, "getVigLinkURL", String.class, new XC_MethodReplacement() {
+                // This method takes one argument (the unmasked link,) masks it, then returns the masked URL.
+                @Override
+                protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+                    return param.args[0];
+                }
+            });
         }
     }
 
