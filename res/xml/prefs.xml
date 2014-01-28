@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+            android:key="pref_support"
+            android:title="@string/pref_support_title"
+            android:summary="@string/pref_support_summary">
+        <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://forum.xda-developers.com/showthread.php?t=2603868"/>
+    </Preference>
+    <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_unshorten_urls"
+            android:title="@string/pref_unshorten_urls_title"
+            android:summary="@string/pref_unshorten_urls_summary"/>
+    <ListPreference
+            android:key="pref_toast_type"
+            android:title="@string/pref_toast_type_title"
+            android:summary="@string/pref_toast_type_summary"
+            android:dialogTitle="@string/pref_toast_type_title"
+            android:defaultValue="2"
+            android:entries="@array/toast_type_entries"
+            android:entryValues="@array/toast_type_values"/>
+</PreferenceScreen>
