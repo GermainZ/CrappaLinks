@@ -190,6 +190,18 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     param.setResult(null);
                 }
             });
+        } else if (pkg.equals("net.slickdeals.android")) {
+            final Class<?> TagHandler = findClass("net.slickdeals.android.d.s", lpparam.classLoader);
+            findAndHookMethod(TagHandler, "a", Activity.class, String.class, new XC_MethodHook() {
+                // The second argument is the shortened URL. This method generates an intent to open it.
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    if (!pref_unshorten_urls)
+                        return;
+                    new ResolveUrl().execute((String) param.args[1]);
+                    param.setResult(null);
+                }
+            });
         }
     }
 
