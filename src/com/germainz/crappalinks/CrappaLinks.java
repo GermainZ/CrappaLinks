@@ -10,8 +10,13 @@ import android.content.res.XModuleResources;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.text.ClipboardManager;
 import android.view.View;
 import android.widget.Toast;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -156,6 +161,35 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     return param.args[0];
                 }
             });
+        } else if (pkg.equals("com.tippingcanoe.mydealz")) {
+            final Class<?> TagHandler = findClass("com.tippingcanoe.mydealz.fragments.ShowDealFragment$9", lpparam.classLoader);
+            findAndHookMethod(TagHandler, "onClick", View.class, new XC_MethodHook() {
+                // This method does the following:
+                // 1- track the click (not sure what this does; I'm guessing it's for a history feature?)
+                // 2- copies the deal code to the clipboard if one exists
+                // 3- generates the intent
+                // Our replacement method ignore 1- but does 2- and executes ResolveUrl which will
+                // do 3- after resolving the URL.
+                @SuppressWarnings("deprecation")
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    if (!pref_unshorten_urls)
+                        return;
+                    Object ShowDealFragment = getObjectField(param.thisObject, "this$0");
+                    Object dealToShow = getObjectField(ShowDealFragment, "dealToShow");
+                    String dealLink = (String) callMethod(dealToShow, "getDealLink");
+                    Boolean hasCode = (Boolean) callMethod(dealToShow, "hasCode");
+                    String dealCode = (String) callMethod(dealToShow, "getCode");
+                    if (hasCode) {
+                        Application context = AndroidAppHelper.currentApplication();
+                        ((ClipboardManager) context.getSystemService("clipboard")).setText(dealCode);
+                        Toast.makeText(context, "Kopiert!!", 0).show();
+                    }
+                    Uri uri = Uri.parse(dealLink);
+                    new ResolveUrl().execute(uri.toString());
+                    param.setResult(null);
+                }
+            });
         }
     }
 
@@ -201,7 +235,7 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
     public static String redirectHosts[] = {"t.co", "youtu.be", "bit.ly", "menea.me", "kcy.me", "goo.gl", "ow.ly",
             "j.mp", "redes.li", "dlvr.it", "tinyurl.com", "tmblr.co", "reut.rs", "sns.mx", "wp.me", "4sq.com",
             "ed.cl", "huff.to", "mun.do", "cos.as", "flip.it", "amzn.to", "cort.as", "on.cnn.com", "fb.me",
-            "shar.es", "spr.ly", "v.ht", "v0v.in", "redd.it", "bitly.com", "tl.gd", "wh.gov",
+            "shar.es", "spr.ly", "v.ht", "v0v.in", "redd.it", "bitly.com", "tl.gd", "wh.gov", "hukd.mydealz.de",
             "untp.i", "kck.st", "engt.co", "nyti.ms", "cnnmon.ie", "vrge.co", "is.gd", "cnn.it"};
 
     private boolean getRedirect(Uri uri) throws IOException {
@@ -250,8 +284,14 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 c.setInstanceFollowRedirects(false);
                 c.connect();
                 final int responseCode = c.getResponseCode();
-                if (responseCode >= 300 && responseCode < 400)
+                if (responseCode >= 300 && responseCode < 400) {
                     return c.getHeaderField("Location");
+                } else if (c.getURL().getHost().equals("hukd.mydealz.de")) {
+                    Document d = Jsoup.parse(c.getInputStream(), "UTF-8", url);
+                    Elements refresh = d.select("meta[http-equiv=Refresh]");
+                    if (!refresh.isEmpty())
+                        return refresh.first().attr("url");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
