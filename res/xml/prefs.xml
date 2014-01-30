@@ -22,4 +22,9 @@
             android:defaultValue="2"
             android:entries="@array/toast_type_entries"
             android:entryValues="@array/toast_type_values"/>
+    <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_show_app_icon"
+            android:title="@string/pref_show_app_icon_title"
+            android:summary="@string/pref_show_app_icon_summary"/>
 </PreferenceScreen>

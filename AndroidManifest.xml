@@ -18,9 +18,20 @@
         <activity android:name="com.germainz.crappalinks.Preferences">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS"/>
             </intent-filter>
         </activity>
+        <activity-alias
+            android:enabled="true"
+            android:name="com.germainz.crappalinks.Preferences-Alias"
+            android:label="@string/app_name"
+            android:icon="@drawable/ic_launcher"
+            android:targetActivity="com.germainz.crappalinks.Preferences">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
         <activity
                 android:name="com.germainz.crappalinks.Dummy"
                 android:theme="@android:style/Theme.NoDisplay"
