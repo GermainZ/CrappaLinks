@@ -85,18 +85,24 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     Intent intent = new Intent("android.intent.action.VIEW");
                     String s = (String) callMethod(param.thisObject, "getURL");
                     Uri uri = Uri.parse(s);
-                    s = uri.getQueryParameter("q");
                     intent.setData(uri);
                     intent.setPackage(context.getPackageName());
+                    // The Play Store does something internal for these links, but it doesn't seem to go
+                    // against our module's goal, so we're keeping it intact.
                     if (context.getPackageManager().resolveActivity(intent, 0x10000) != null)
                         return;
-                    if (getRedirect(Uri.parse(s))) {
+                    uri = Uri.parse(uri.getQueryParameter("q"));
+                    intent.setData(uri);
+                    // the following makes sure the text pane stays open.
+                    Object DetailsTextViewBinder = getObjectField(param.thisObject, "this$0");
+                    callMethod(DetailsTextViewBinder, "access$602", DetailsTextViewBinder, true);
+                    if (getRedirect(uri)) {
                         param.setResult(null);
                         return;
                     }
                     intent.setPackage(null);
                     context.startActivity(intent);
-                    return;
+                    param.setResult(null);
                 }
             });
         } else if (pkg.equals("com.facebook.katana")) {
@@ -138,10 +144,9 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
                     Uri uri = (Uri) param.args[0];
                     if (getRedirect(uri))
-                        return (null);
+                        return null;
                     Intent intent;
-                    intent = new Intent("com.germainz.crappalinks.DUMMY", uri);
-                    intent = intent.setPackage("com.germainz.crappalinks");
+                    intent = new Intent("android.intent.action.VIEW", uri);
                     intent = intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     Application app = AndroidAppHelper.currentApplication();
                     try {
