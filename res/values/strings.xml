@@ -12,8 +12,8 @@
     <string name="toast_type_entries_off">Off</string>
     <string name="toast_type_entries_brief">Brief (the unshortened URL is not toasted)</string>
     <string name="toast_type_entries_full">Full (toast unshortened URL)</string>
-    <string name="toast_message_network">No network connection. Couldn\'t shorten URL: </string>
+    <string name="toast_message_network">"No network connection. Couldn\'t shorten URL: "</string>
     <string name="toast_message_started">Unshortening URL…</string>
-    <string name="toast_message_done">Unshortened URL: </string>
+    <string name="toast_message_done">"Unshortened URL: "</string>
 
 </resources>

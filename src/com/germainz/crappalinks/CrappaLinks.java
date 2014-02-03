@@ -23,8 +23,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.HashMap;
 
 import static de.robv.android.xposed.XposedHelpers.callMethod;
+import static de.robv.android.xposed.XposedHelpers.callStaticMethod;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 import static de.robv.android.xposed.XposedHelpers.getObjectField;
@@ -71,8 +73,15 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 hookCrappaTalk(TagHandler, "openUrlBySkimlink");
                 hookCrappaTalk(TagHandler, "openUrlByViglink");
             } else {
-                hookCrappaTalk(TagHandler, "doVglink");
-                hookCrappaTalk(TagHandler, "doSkimlik");
+                Object activityThread = callStaticMethod(findClass("android.app.ActivityThread", null), "currentActivityThread");
+                Context context = (Context) callMethod(activityThread, "getSystemContext");
+                String versionName = context.getPackageManager().getPackageInfo(pkg, 0).versionName;
+                if (versionName.startsWith("2.")) {
+                    hookCrappaTalkClassic(TagHandler, lpparam.classLoader);
+                } else {
+                    hookCrappaTalk(TagHandler, "doVglink");
+                    hookCrappaTalk(TagHandler, "doSkimlik");
+                }
             }
         } else if (pkg.equals("com.android.vending")) {
             final Class<?> TagHandler = findClass("com.google.android.finsky.activities.DetailsTextViewBinder$SelfishUrlSpan", lpparam.classLoader);
@@ -237,14 +246,46 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 if (getRedirect(uri))
                     return null;
                 Activity mContext = (Activity) getObjectField(param.thisObject, "mContext");
-                Intent intent;
-                intent = new Intent("android.intent.action.VIEW", uri);
+                Intent intent = new Intent("android.intent.action.VIEW", uri);
                 try {
                     mContext.startActivity(intent);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
                 return null;
+            }
+        });
+    }
+
+    private void hookCrappaTalkClassic(final Class<?> TagHandler, final ClassLoader classLoader) {
+        findAndHookMethod(TagHandler, "doWeb", String.class, String.class, new XC_MethodHook() {
+            // This method checks if the link can be handled internally. If not, it masks the link
+            // and sends an intent to view it.
+            // The unmasked URL is the first argument but is in the format "string" (quotes included.)
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                String s = (String) param.args[0];
+                if (s.contains("tapatalk://uid"))
+                    return;
+                Object forumstatus = getObjectField(param.thisObject, "forumStatus");
+                String s2 = ((String) callMethod(forumstatus, "getUrl")).replace("www.", "").replace("http://", "");
+                Class<?> ForumUrlUtil = findClass("com.quoord.tapatalkpro.util.ForumUrlUtil", classLoader);
+                HashMap hashmap = (HashMap) callStaticMethod(ForumUrlUtil, "getIdFromUrl", s);
+                if (s.contains(s2) && hashmap.size() > 0)
+                    return;
+                Uri uri = Uri.parse(s.substring(1, s.length()-1));
+                if (getRedirect(uri)) {
+                    param.setResult(null);
+                    return;
+                }
+                Activity mContext = (Activity) getObjectField(param.thisObject, "mContext");
+                Intent intent = new Intent("android.intent.action.VIEW", uri);
+                try {
+                    mContext.startActivity(intent);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                param.setResult(null);
             }
         });
     }
