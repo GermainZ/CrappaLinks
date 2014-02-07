@@ -127,7 +127,7 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     Uri uri = Uri.parse(s);
                     if (getRedirect(uri))
                         param.setResult(new Intent().setData(uri).setComponent(cn));
-                    else if (!s.equals(uri.toString()))
+                    else
                         param.setResult(new Intent("android.intent.action.VIEW").setData(uri));
                 }
             });
