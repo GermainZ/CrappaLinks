@@ -121,8 +121,10 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 // This method returns an intent generated from the masked uri, if the Facebook app
                 // can't handle it (external links.)
                 @Override
-                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     String s = (String) param.args[1];
+                    if (s.startsWith("fb://"))
+                        return;
                     s = unmaskFacebook(s);
                     Uri uri = Uri.parse(s);
                     if (getRedirect(uri))
@@ -131,18 +133,21 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         param.setResult(new Intent("android.intent.action.VIEW").setData(uri));
                 }
             });
-            findAndHookMethod(TagHandler2, "a", String.class, new XC_MethodReplacement() {
+            findAndHookMethod(TagHandler2, "a", String.class, new XC_MethodHook() {
                 // This method returns an intent to view the given URL, without doing any checks.
                 // So we just have to alter the given argument.
                 @Override
-                protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
-                    String s = unmaskFacebook((String) param.args[0]);
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    String s = (String) param.args[0];
+                    if (s.startsWith("fb://"))
+                        return;
+                    s = unmaskFacebook(s);
                     Uri uri = Uri.parse(s);
                     if (getRedirect(uri)) {
                         Intent intent = new Intent("android.intent.action.VIEW").setData(uri);
-                        return intent.setComponent(cn);
+                        param.setResult(intent.setComponent(cn));
                     }
-                    return new Intent("android.intent.action.VIEW").setData(uri);
+                    param.setResult(new Intent("android.intent.action.VIEW").setData(uri));
                 }
             });
         } else if (pkg.equals("com.vkontakte.android")) {
@@ -224,7 +229,7 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
         // internal links begin with fb://
         Uri uri = Uri.parse(s);
         String host = uri.getHost();
-        if (s.startsWith("fb://") || !host.equals("m.facebook.com"))
+        if (!host.equals("m.facebook.com"))
             return s; // it's not an external link, we shouldn't mess with it
         s = uri.getQueryParameter("u");
         try {
