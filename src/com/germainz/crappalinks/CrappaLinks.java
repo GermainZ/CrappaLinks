@@ -278,7 +278,9 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 HashMap hashmap = (HashMap) callStaticMethod(ForumUrlUtil, "getIdFromUrl", s);
                 if (s.contains(s2) && hashmap.size() > 0)
                     return;
-                Uri uri = Uri.parse(s.substring(1, s.length()-1));
+                if (s.startsWith("\""))
+                    s = s.substring(1, s.length()-1);
+                Uri uri = Uri.parse(s);
                 if (getRedirect(uri)) {
                     param.setResult(null);
                     return;
