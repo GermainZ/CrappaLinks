@@ -327,6 +327,7 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     class ResolveUrl extends AsyncTask<String, Void, String> {
         Application context = null;
+        boolean connectionError = false;
 
         protected ResolveUrl() {
             context = AndroidAppHelper.currentApplication();
@@ -370,8 +371,10 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
         protected String doInBackground(String... urls) {
             String redirectUrl = urls[0];
             String finalUrl = redirectUrl;
-            if (((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() == null)
-                return null;
+            if (((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() == null) {
+                connectionError = true;
+                return finalUrl;
+            }
             while (redirectUrl != null) {
                 redirectUrl = getRedirect(redirectUrl);
                 if (redirectUrl != null)
@@ -381,11 +384,9 @@ public class CrappaLinks implements IXposedHookLoadPackage, IXposedHookZygoteIni
         }
 
         protected void onPostExecute(String uri) {
-            if (uri == null) {
+            if (connectionError)
                 Toast.makeText(context, toast_message_network + uri, Toast.LENGTH_LONG).show();
-                return;
-            }
-            if (pref_toast_type.equals("2"))
+            else if (pref_toast_type.equals("2"))
                 Toast.makeText(context, toast_message_done + uri, Toast.LENGTH_LONG).show();
             Intent intent;
             intent = new Intent("android.intent.action.VIEW", Uri.parse(uri));
