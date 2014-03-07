@@ -33,8 +33,9 @@
             </intent-filter>
         </activity-alias>
         <activity
-                android:name="com.germainz.crappalinks.Dummy"
+                android:name="com.germainz.crappalinks.Resolver"
                 android:theme="@android:style/Theme.NoDisplay"
+                android:excludeFromRecents="true"
                 android:exported="true">
         </activity>
 
