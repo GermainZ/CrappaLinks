@@ -1,8 +1,12 @@
 <resources>
 
     <string name="app_name">CrappaLinks</string>
-    <string name="pref_support_title">Support Thread</string>
-    <string name="pref_support_summary">A reboot is required to apply the settings.</string>
+    <string name="pref_support_title">CrappaLinks</string>
+    <string name="pref_support_summary">Coded by GermainZ.</string>
+    <string name="pref_xposed_title">Xposed Framework</string>
+    <string name="pref_xposed_summary">This module uses the Xposed Framework by rovo89 and Tungstwenty.</string>
+    <string name="pref_jsoup_title">jsoup</string>
+    <string name="pref_jsoup_summary">The jsoup library by Jonathan Hedley is used to unshorten some URLs.</string>
     <string name="pref_unshorten_urls_title">Unshorten URLs</string>
     <string name="pref_unshorten_urls_summary">Unshorten supported URLs.</string>
     <string name="pref_toast_type_title">Toast Type</string>
@@ -12,7 +16,7 @@
     <string name="toast_type_entries_off">Off</string>
     <string name="toast_type_entries_brief">Brief (the unshortened URL is not toasted)</string>
     <string name="toast_type_entries_full">Full (toast unshortened URL)</string>
-    <string name="toast_message_network">"No network connection. Couldn\'t shorten URL: "</string>
+    <string name="toast_message_network">"No network connection. Couldn\'t unshorten URL: "</string>
     <string name="toast_message_started">Unshortening URL…</string>
     <string name="toast_message_done">"Unshortened URL: "</string>
 
