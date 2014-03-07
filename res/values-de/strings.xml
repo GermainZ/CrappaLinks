@@ -1,0 +1,19 @@
+<resources>
+
+    <string name="app_name">CrappaLinks</string>
+    <string name="pref_support_title">Support-Thread</string>
+    <string name="pref_support_summary">Ein Neustart des Geräts ist notwendig, um die Einstellungen anzuwenden.</string>
+    <string name="pref_unshorten_urls_title">URLs entkürzen</string>
+    <string name="pref_unshorten_urls_summary">Unterstützte URLs entkürzen.</string>
+    <string name="pref_toast_type_title">Toast-Typ</string>
+    <string name="pref_toast_type_summary">Wird gezeigt bevor/nachdem die URL entkürzt wurde</string>
+    <string name="pref_show_app_icon_title">Zeige App-Symbol</string>
+    <string name="pref_show_app_icon_summary">Deaktivieren, um CrappaLinks App-Symbol in der App-Übersicht zu verstecken.</string>
+    <string name="toast_type_entries_off">Aus</string>
+    <string name="toast_type_entries_brief">Kurz (die entkürzte URL wird nicht getoastet)</string>
+    <string name="toast_type_entries_full">Voll (entkürzte URL wird getoastet)</string>
+    <string name="toast_message_network">"Keine Netzwerk-Verbindung. URL konnte nicht entkürzt werden: "</string>
+    <string name="toast_message_started">URL entkürzen…</string>
+    <string name="toast_message_done">"URL entkürzt: "</string>
+
+</resources>
