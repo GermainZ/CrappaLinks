@@ -24,21 +24,21 @@
             android:data="http://jsoup.org/"/>
     </Preference>
     <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="pref_unshorten_urls"
-            android:title="@string/pref_unshorten_urls_title"
-            android:summary="@string/pref_unshorten_urls_summary"/>
+        android:defaultValue="true"
+        android:key="pref_unshorten_urls"
+        android:title="@string/pref_unshorten_urls_title"
+        android:summary="@string/pref_unshorten_urls_summary"/>
     <ListPreference
-            android:key="pref_toast_type"
-            android:title="@string/pref_toast_type_title"
-            android:summary="@string/pref_toast_type_summary"
-            android:dialogTitle="@string/pref_toast_type_title"
-            android:defaultValue="2"
-            android:entries="@array/toast_type_entries"
-            android:entryValues="@array/toast_type_values"/>
+        android:key="pref_toast_type"
+        android:title="@string/pref_toast_type_title"
+        android:summary="@string/pref_toast_type_summary"
+        android:dialogTitle="@string/pref_toast_type_title"
+        android:defaultValue="2"
+        android:entries="@array/toast_type_entries"
+        android:entryValues="@array/toast_type_values"/>
     <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="pref_show_app_icon"
-            android:title="@string/pref_show_app_icon_title"
-            android:summary="@string/pref_show_app_icon_summary"/>
+        android:defaultValue="true"
+        android:key="pref_show_app_icon"
+        android:title="@string/pref_show_app_icon_title"
+        android:summary="@string/pref_show_app_icon_summary"/>
 </PreferenceScreen>
