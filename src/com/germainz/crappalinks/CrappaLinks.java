@@ -57,10 +57,10 @@ public class CrappaLinks implements IXposedHookZygoteInit {
 
                 // Unmask the URL (nested masked URLs, too.)
                 Uri unmaskedUrl = intentData;
-                int i = getMaskedId(unmaskedUrl.getHost());
+                int i = getMaskedId(unmaskedUrl);
                 while (i >= 0) {
                     unmaskedUrl = unmaskLink(unmaskedUrl, i);
-                    i = getMaskedId(unmaskedUrl.getHost());
+                    i = getMaskedId(unmaskedUrl);
                 }
 
                 // Does the URL need to be unshortened?
@@ -127,10 +127,20 @@ public class CrappaLinks implements IXposedHookZygoteInit {
     /**
      * Return the position of the host in MASK_HOSTS, or -1 if it isn't a known URL masker
      */
-    private int getMaskedId(String host) {
+    private int getMaskedId(Uri uri) {
+        String host = uri.getHost();
         for (int i = 0; i < MASK_HOSTS.length; i++) {
-            if (host.equals(MASK_HOSTS[i]))
-                return i;
+            if (host.equals(MASK_HOSTS[i])) {
+                if (MASK_HOSTS_SEG[i] == null) {
+                    return i;
+                } else {
+                    List pathSegments = uri.getPathSegments();
+                    if (pathSegments == null)
+                        return -1;
+                    if (pathSegments.size() > 0 && MASK_HOSTS_SEG[i].equals(pathSegments.get(0)))
+                        return i;
+                }
+            }
         }
         return -1;
     }
