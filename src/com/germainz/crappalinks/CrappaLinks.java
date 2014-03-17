@@ -74,7 +74,7 @@ public class CrappaLinks implements IXposedHookZygoteInit {
                 // We just set the intent's data to the unmasked URL. If this URL needs to be unshortened,
                 // it'll open with our activity (since we explicitly set the component above) which
                 // will unshorten it then send a new intent.
-                intent.setData(unmaskedUrl);
+                intent.setDataAndType(unmaskedUrl, intent.getType());
             }
         };
 
