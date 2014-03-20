@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="app_name">CrappaLinks</string>
+    <string name="pref_support_title">CrappaLinks</string>
+    <string name="pref_support_summary">開發者：GermainZ</string>
+    <string name="pref_xposed_title">Xposed 框架</string>
+    <string name="pref_xposed_summary">本模組使用了由 rovo89 與 Tungstwenty 開發的 Xposed 框架。</string>
+    <string name="pref_jsoup_title">jsoup</string>
+    <string name="pref_jsoup_summary">由 Jonathan Hedley 開發的 jsoup 庫用於解碼短鏈接。</string>
+    <string name="pref_unshorten_urls_title">解碼短鏈接</string>
+    <string name="pref_unshorten_urls_summary">解碼短鏈接</string>
+    <string name="pref_toast_type_title">提示框類型</string>
+    <string name="pref_toast_type_summary">顯示解碼超鏈接的提示框</string>
+    <string name="pref_show_app_icon_title">顯示啟動器圖標</string>
+    <string name="pref_show_app_icon_summary">禁用以隱藏 CrappaLink 在啟動器上的圖標</string>
+    <string name="toast_type_entries_off">隱藏</string>
+    <string name="toast_type_entries_brief">簡略（不在提示框中顯示解碼後的真實鏈接）</string>
+    <string name="toast_type_entries_full">詳細（在提示框中顯示解碼後的真實鏈接）</string>
+    <string name="toast_message_network">"無網路連線。無法解碼短鏈接："</string>
+    <string name="toast_message_started">正在解碼短鏈接…</string>
+    <string name="toast_message_done">"真實鏈接："</string>
+
+</resources>
