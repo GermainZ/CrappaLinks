@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.jsoup.Jsoup;
@@ -28,7 +27,6 @@ public class Resolver extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Xposed", "Hello! " + getIntent().getDataString());
         SharedPreferences sharedPreferences = getSharedPreferences("com.germainz.crappalinks_preferences", Context.MODE_WORLD_READABLE);
         toastType = sharedPreferences.getString("pref_toast_type", TOAST_NONE);
         new ResolveUrl().execute(getIntent().getDataString());
