@@ -17,6 +17,7 @@ import org.jsoup.select.Elements;
 
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 
 public class Resolver extends Activity {
@@ -37,6 +38,7 @@ public class Resolver extends Activity {
     class ResolveUrl extends AsyncTask<String, Void, String> {
         Context context = null;
         boolean connectionError = false;
+        boolean noConnectionError = false;
 
         private ResolveUrl() {
             context = getBaseContext();
@@ -61,7 +63,10 @@ public class Resolver extends Activity {
                 final int responseCode = c.getResponseCode();
                 // If the response code is 3xx, it's a redirection. Return the real location.
                 if (responseCode >= 300 && responseCode < 400) {
-                    return c.getHeaderField("Location");
+                    String location = c.getHeaderField("Location");
+                    if (!new URI(location).isAbsolute())
+                        return new URI(url).resolve(location).toString();
+                    return location;
                 }
                 // It might also be a redirection using meta tags. MydealZ uses that.
                 else if (c.getURL().getHost().equals("hukd.mydealz.de")) {
@@ -88,7 +93,7 @@ public class Resolver extends Activity {
 
             // if there's no connection, fail and return the original URL.
             if (((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() == null) {
-                connectionError = true;
+                noConnectionError = true;
                 return finalUrl;
             }
 
@@ -102,8 +107,10 @@ public class Resolver extends Activity {
         }
 
         protected void onPostExecute(String uri) {
-            if (connectionError)
+            if (noConnectionError)
                 Toast.makeText(context, getString(R.string.toast_message_network) + uri, Toast.LENGTH_LONG).show();
+            else if (connectionError)
+                Toast.makeText(context, getString(R.string.toast_message_error) + uri, Toast.LENGTH_LONG).show();
             else if (toastType.equals(TOAST_DETAILED))
                 Toast.makeText(context, getString(R.string.toast_message_done) + uri, Toast.LENGTH_LONG).show();
 
