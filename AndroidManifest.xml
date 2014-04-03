@@ -38,6 +38,10 @@
                 android:excludeFromRecents="true"
                 android:exported="true">
         </activity>
+        <activity
+            android:name="com.germainz.crappalinks.ConfirmDialog"
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:excludeFromRecents="true"/>
 
         <meta-data
                 android:name="xposedmodule"

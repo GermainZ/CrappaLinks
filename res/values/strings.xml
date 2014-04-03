@@ -11,6 +11,8 @@
     <string name="pref_unshorten_urls_summary">Unshorten supported URLs.</string>
     <string name="pref_toast_type_title">Toast Type</string>
     <string name="pref_toast_type_summary">Shown before/after a URL gets unshortened</string>
+    <string name="pref_confirm_open_title">Shortened URLs Confirmation</string>
+    <string name="pref_confirm_open_summary">Ask for confirmation before opening shortened URLs.</string>
     <string name="pref_show_app_icon_title">Show launcher icon</string>
     <string name="pref_show_app_icon_summary">Disable to hide CrappaLink\'s launcher icon.</string>
     <string name="toast_type_entries_off">Off</string>
@@ -20,5 +22,8 @@
     <string name="toast_message_started">Unshortening URL…</string>
     <string name="toast_message_done">"Unshortened URL: "</string>
     <string name="toast_message_error">"An error has occurred. Please report this along with a logcat. URL: "</string>
+    <string name="dialog_confirm_open">Would you like to open the following URL?\n</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
 
 </resources>

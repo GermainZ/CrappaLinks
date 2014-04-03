@@ -22,6 +22,7 @@ import java.net.URL;
 public class Resolver extends Activity {
 
     private String toastType;
+    private boolean confirmOpen;
     private static final String TOAST_NONE = "0";
     private static final String TOAST_DETAILED = "2";
 
@@ -29,6 +30,7 @@ public class Resolver extends Activity {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = getSharedPreferences("com.germainz.crappalinks_preferences", Context.MODE_WORLD_READABLE);
         toastType = sharedPreferences.getString("pref_toast_type", TOAST_NONE);
+        confirmOpen = sharedPreferences.getBoolean("pref_confirm_open", false);
         new ResolveUrl().execute(getIntent().getDataString());
         finish();
     }
@@ -39,7 +41,7 @@ public class Resolver extends Activity {
         boolean noConnectionError = false;
 
         private ResolveUrl() {
-            context = getBaseContext();
+            context = Resolver.this;
         }
 
         @Override
@@ -104,20 +106,22 @@ public class Resolver extends Activity {
             return finalUrl;
         }
 
-        protected void onPostExecute(String uri) {
+        protected void onPostExecute(final String uri) {
             if (noConnectionError)
                 Toast.makeText(context, getString(R.string.toast_message_network) + uri, Toast.LENGTH_LONG).show();
             else if (connectionError)
                 Toast.makeText(context, getString(R.string.toast_message_error) + uri, Toast.LENGTH_LONG).show();
-            else if (toastType.equals(TOAST_DETAILED))
-                Toast.makeText(context, getString(R.string.toast_message_done) + uri, Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(uri));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("crappalinks", "");
-            try {
-                context.startActivity(intent);
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            if (confirmOpen) {
+                Intent confirmDialogIntent = new Intent(context, ConfirmDialog.class);
+                confirmDialogIntent.putExtra("uri", uri);
+                startActivity(confirmDialogIntent);
+           } else {
+                if (!noConnectionError && !connectionError && toastType.equals(TOAST_DETAILED))
+                    Toast.makeText(context, getString(R.string.toast_message_done) + uri, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("crappalinks", "");
+                startActivity(intent);
             }
         }
     }
