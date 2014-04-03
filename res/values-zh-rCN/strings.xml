@@ -11,6 +11,8 @@
     <string name="pref_unshorten_urls_summary">反解码短链接</string>
     <string name="pref_toast_type_title">提示框类型</string>
     <string name="pref_toast_type_summary">显示解码超链接的提示框</string>
+    <string name="pref_confirm_open_title">解码短链确认</string>
+    <string name="pref_confirm_open_summary">打开短链接前要求确认</string>
     <string name="pref_show_app_icon_title">显示启动器图标</string>
     <string name="pref_show_app_icon_summary">禁用以隐藏 CrappaLink 在启动器上的图标</string>
     <string name="toast_type_entries_off">隐藏</string>
@@ -19,5 +21,9 @@
     <string name="toast_message_network">"无网络连接。无法解码短链接："</string>
     <string name="toast_message_started">正在解码短链接…</string>
     <string name="toast_message_done">"真实链接："</string>
+    <string name="toast_message_error">"出错。请报告并附带调试信息。链接地址："</string>
+    <string name="dialog_confirm_open">您想打开下面的链接吗？\n</string>
+    <string name="dialog_yes">是</string>
+    <string name="dialog_no">否</string>
 
 </resources>

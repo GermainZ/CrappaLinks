@@ -11,6 +11,8 @@
     <string name="pref_unshorten_urls_summary">解碼短鏈接</string>
     <string name="pref_toast_type_title">提示框類型</string>
     <string name="pref_toast_type_summary">顯示解碼超鏈接的提示框</string>
+    <string name="pref_confirm_open_title">解碼短鏈確認</string>
+    <string name="pref_confirm_open_summary">打開短鏈接前要求確認</string>
     <string name="pref_show_app_icon_title">顯示啟動器圖標</string>
     <string name="pref_show_app_icon_summary">禁用以隱藏 CrappaLink 在啟動器上的圖標</string>
     <string name="toast_type_entries_off">隱藏</string>
@@ -19,5 +21,9 @@
     <string name="toast_message_network">"無網路連線。無法解碼短鏈接："</string>
     <string name="toast_message_started">正在解碼短鏈接…</string>
     <string name="toast_message_done">"真實鏈接："</string>
+    <string name="toast_message_error">"出錯。請報告並附帶調試信息。鏈接地址："</string>
+    <string name="dialog_confirm_open">您想打開下面的鏈接嗎？\n</string>
+    <string name="dialog_yes">是</string>
+    <string name="dialog_no">否</string>
 
 </resources>

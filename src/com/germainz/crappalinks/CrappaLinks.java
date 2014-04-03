@@ -26,18 +26,20 @@ public class CrappaLinks implements IXposedHookZygoteInit {
             "j.mp", "redes.li", "dlvr.it", "tinyurl.com", "tmblr.co", "reut.rs", "sns.mx", "wp.me", "4sq.com",
             "ed.cl", "huff.to", "mun.do", "cos.as", "flip.it", "amzn.to", "cort.as", "on.cnn.com", "fb.me",
             "shar.es", "spr.ly", "v.ht", "v0v.in", "redd.it", "bitly.com", "tl.gd", "wh.gov", "hukd.mydealz.de",
-            "untp.i", "kck.st", "engt.co", "nyti.ms", "cnnmon.ie", "vrge.co", "is.gd", "cnn.it", "t.cn", "url.cn"};
+            "untp.i", "kck.st", "engt.co", "nyti.ms", "cnnmon.ie", "vrge.co", "is.gd", "cnn.it", "spon.de",
+            "affiliation.appgratuites-network.com", "t.cn", "url.cn"};
 
     // Hosts that mask links
     private static final String[] MASK_HOSTS = {"m.facebook.com", "link2.tapatalk.com", "link.tapatalk.com", "google.com",
-            "m.vk.com", "click.linksynergy.com", "youtube.com", "m.scope.am", "redirectingat.com", "jdoqocy.com"};
+            "m.vk.com", "click.linksynergy.com", "youtube.com", "m.scope.am", "redirectingat.com", "jdoqocy.com",
+            "apicdn.viglink.com"};
     // If the masked URL is in the form <host>/<segment>, specify that segment
     // for example, Facebook's masked URLs look like http://m.facebook.com/l.php…
     private static final String[] MASK_HOSTS_SEG = {"l.php", null, null, "url", "away.php", null, "attribution_link", "api",
-            "rewrite.php", null};
+            "rewrite.php", null, "api"};
     // Which parameter should we get?
     // for example, Facebook's masked URLs look like http://m.facebook.com/l.php?u=<actual URL>…
-    private static final String[] MASK_HOSTS_PAR = {"u", "url", "out", "q", "to", "RD_PARM1", "u", "out", "url", "url"};
+    private static final String[] MASK_HOSTS_PAR = {"u", "url", "out", "q", "to", "RD_PARM1", "u", "out", "url", "url", "out"};
 
     public void initZygote(StartupParam startupParam) throws Throwable {
         XC_MethodHook hook = new XC_MethodHook() {
@@ -117,8 +119,8 @@ public class CrappaLinks implements IXposedHookZygoteInit {
      * Return true if the host is a known URL shortener
      */
     private boolean isRedirect(String host) {
-        for (int i = 0; i < REDIRECT_HOSTS.length; i++) {
-            if (host.equals(REDIRECT_HOSTS[i]))
+        for (String REDIRECT_HOST : REDIRECT_HOSTS) {
+            if (host.equals(REDIRECT_HOST))
                 return true;
         }
         return false;
@@ -146,4 +148,3 @@ public class CrappaLinks implements IXposedHookZygoteInit {
     }
 
 }
-
