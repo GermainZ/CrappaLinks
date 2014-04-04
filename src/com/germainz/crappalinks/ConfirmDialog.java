@@ -31,6 +31,12 @@ public class ConfirmDialog extends Activity {
         builder.setMessage(getString(R.string.dialog_confirm_open) + uri)
                 .setPositiveButton(R.string.dialog_yes, clickListener)
                 .setNegativeButton(R.string.dialog_no, clickListener)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        finish();
+                    }
+                })
                 .show();
     }
 
