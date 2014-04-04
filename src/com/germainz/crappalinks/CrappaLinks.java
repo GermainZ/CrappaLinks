@@ -27,7 +27,7 @@ public class CrappaLinks implements IXposedHookZygoteInit {
             "ed.cl", "huff.to", "mun.do", "cos.as", "flip.it", "amzn.to", "cort.as", "on.cnn.com", "fb.me",
             "shar.es", "spr.ly", "v.ht", "v0v.in", "redd.it", "bitly.com", "tl.gd", "wh.gov", "hukd.mydealz.de",
             "untp.i", "kck.st", "engt.co", "nyti.ms", "cnnmon.ie", "vrge.co", "is.gd", "cnn.it", "spon.de",
-            "affiliation.appgratuites-network.com"};
+            "affiliation.appgratuites-network.com", "t.cn", "url.cn"};
 
     // Hosts that mask links
     private static final String[] MASK_HOSTS = {"m.facebook.com", "link2.tapatalk.com", "link.tapatalk.com", "google.com",
