@@ -32,7 +32,7 @@ public class CrappaLinks implements IXposedHookZygoteInit {
     // Hosts that mask links
     private static final String[] MASK_HOSTS = {"m.facebook.com", "link2.tapatalk.com", "link.tapatalk.com", "google.com",
             "m.vk.com", "click.linksynergy.com", "youtube.com", "m.scope.am", "redirectingat.com", "jdoqocy.com",
-            "apicdn.viglink.com"};
+            "viglink.com"};
     // If the masked URL is in the form <host>/<segment>, specify that segment
     // for example, Facebook's masked URLs look like http://m.facebook.com/l.php…
     private static final String[] MASK_HOSTS_SEG = {"l.php", null, null, "url", "away.php", null, "attribution_link", "api",
@@ -132,7 +132,7 @@ public class CrappaLinks implements IXposedHookZygoteInit {
     private int getMaskedId(Uri uri) {
         String host = uri.getHost();
         for (int i = 0; i < MASK_HOSTS.length; i++) {
-            if (host.equals(MASK_HOSTS[i])) {
+            if (host.endsWith(MASK_HOSTS[i])) {
                 if (MASK_HOSTS_SEG[i] == null) {
                     return i;
                 } else {
