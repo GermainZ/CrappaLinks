@@ -15,6 +15,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
@@ -37,7 +38,9 @@ public class Resolver extends Activity {
 
     class ResolveUrl extends AsyncTask<String, Void, String> {
         Context context = null;
+        // unknown error while connecting
         boolean connectionError = false;
+        // connection missing/not working
         boolean noConnectionError = false;
 
         private ResolveUrl() {
@@ -75,8 +78,8 @@ public class Resolver extends Activity {
                     if (!refresh.isEmpty())
                         return refresh.first().attr("url");
                 }
-            } catch (ConnectException e) {
-                connectionError = true;
+            } catch (ConnectException | UnknownHostException e) {
+                noConnectionError = true;
             } catch (Exception e) {
                 connectionError = true;
                 e.printStackTrace();
