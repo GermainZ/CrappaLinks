@@ -119,7 +119,7 @@ public class Resolver extends Activity {
                 Intent confirmDialogIntent = new Intent(context, ConfirmDialog.class);
                 confirmDialogIntent.putExtra("uri", uri);
                 startActivity(confirmDialogIntent);
-           } else {
+            } else {
                 if (!noConnectionError && !connectionError && toastType.equals(TOAST_DETAILED))
                     Toast.makeText(context, getString(R.string.toast_message_done) + uri, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
