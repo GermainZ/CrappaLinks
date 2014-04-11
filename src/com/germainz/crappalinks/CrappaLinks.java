@@ -120,7 +120,7 @@ public class CrappaLinks implements IXposedHookZygoteInit {
      */
     private boolean isRedirect(String host) {
         for (String REDIRECT_HOST : REDIRECT_HOSTS) {
-            if (host.equals(REDIRECT_HOST))
+            if (host.endsWith(REDIRECT_HOST))
                 return true;
         }
         return false;
