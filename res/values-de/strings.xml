@@ -1,8 +1,12 @@
 <resources>
 
     <string name="app_name">CrappaLinks</string>
-    <string name="pref_support_title">Support-Thread</string>
-    <string name="pref_support_summary">Ein Neustart des Geräts ist notwendig, um die Einstellungen anzuwenden.</string>
+    <string name="pref_support_title">CrappaLinks</string>
+    <string name="pref_support_summary">Programmiert von Germainz</string>
+    <string name="pref_xposed_title">Xposed Framework</string>
+    <string name="pref_xposed_summary">Dieses Modul nutzt das Xposed Framework von rovo89 und Tungstwenty.</string>
+    <string name="pref_jsoup_title">jsoup</string>
+    <string name="pref_jsoup_summary">Die jsoup-Bibliothek von Jonathan Hedley wird zum entkürzen von Links genutzt.</string>
     <string name="pref_unshorten_urls_title">URLs entkürzen</string>
     <string name="pref_unshorten_urls_summary">Unterstützte URLs entkürzen.</string>
     <string name="pref_toast_type_title">Toast-Typ</string>
