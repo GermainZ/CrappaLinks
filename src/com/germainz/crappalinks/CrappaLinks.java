@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.List;
 
@@ -32,14 +34,14 @@ public class CrappaLinks implements IXposedHookZygoteInit {
     // Hosts that mask links
     private static final String[] MASK_HOSTS = {"m.facebook.com", "link2.tapatalk.com", "link.tapatalk.com", "google.com",
             "m.vk.com", "click.linksynergy.com", "youtube.com", "m.scope.am", "redirectingat.com", "jdoqocy.com",
-            "viglink.com"};
+            "viglink.com", "youtube.com"};
     // If the masked URL is in the form <host>/<segment>, specify that segment
     // for example, Facebook's masked URLs look like http://m.facebook.com/l.php…
     private static final String[] MASK_HOSTS_SEG = {"l.php", null, null, "url", "away.php", null, "attribution_link", "api",
-            "rewrite.php", null, "api"};
+            "rewrite.php", null, "api", "attribution_link"};
     // Which parameter should we get?
     // for example, Facebook's masked URLs look like http://m.facebook.com/l.php?u=<actual URL>…
-    private static final String[] MASK_HOSTS_PAR = {"u", "url", "out", "q", "to", "RD_PARM1", "u", "out", "url", "url", "out"};
+    private static final String[] MASK_HOSTS_PAR = {"u", "url", "out", "q", "to", "RD_PARM1", "u", "out", "url", "url", "out", "a"};
 
     public void initZygote(StartupParam startupParam) throws Throwable {
         XC_MethodHook hook = new XC_MethodHook() {
@@ -106,6 +108,14 @@ public class CrappaLinks implements IXposedHookZygoteInit {
 
         if (s == null)
             return uri;
+
+        // Resolve link if it's relative
+        try {
+            if (!new URI(s).isAbsolute())
+                s = new URI(uri.toString()).resolve(s).toString();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
         try {
             return Uri.parse(URLDecoder.decode(s, "UTF-8"));
