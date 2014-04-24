@@ -2,22 +2,28 @@
 
     <string name="app_name">CrappaLinks</string>
     <string name="pref_support_title">CrappaLinks</string>
-    <string name="pref_support_summary">Programmiert von Germainz</string>
+    <string name="pref_support_summary">Programmiert von GermainZ</string>
     <string name="pref_xposed_title">Xposed Framework</string>
     <string name="pref_xposed_summary">Dieses Modul nutzt das Xposed Framework von rovo89 und Tungstwenty.</string>
     <string name="pref_jsoup_title">jsoup</string>
-    <string name="pref_jsoup_summary">Die jsoup-Bibliothek von Jonathan Hedley wird zum entkürzen von Links genutzt.</string>
-    <string name="pref_unshorten_urls_title">URLs entkürzen</string>
-    <string name="pref_unshorten_urls_summary">Unterstützte URLs entkürzen.</string>
+    <string name="pref_jsoup_summary">Die jsoup-Bibliothek von Jonathan Hedley wird zum Wiederherstellen von "gekürzten" Links genutzt.</string>
+    <string name="pref_unshorten_urls_title">URLs wiederherstellen</string>
+    <string name="pref_unshorten_urls_summary">Unterstützte URLs wiederherstellen.</string>
     <string name="pref_toast_type_title">Toast-Typ</string>
-    <string name="pref_toast_type_summary">Wird gezeigt bevor/nachdem die URL entkürzt wurde</string>
+    <string name="pref_toast_type_summary">Wird gezeigt, bevor/nachdem die URL wiederhergestellt wurde</string>
+    <string name="pref_confirm_open_title">Bestätigung gekürzter URLs</string>
+    <string name="pref_confirm_open_summary">Vor dem Öffnen von gekürzten URLs nachfragen.</string>
     <string name="pref_show_app_icon_title">Zeige App-Symbol</string>
-    <string name="pref_show_app_icon_summary">Deaktivieren, um CrappaLinks App-Symbol in der App-Übersicht zu verstecken.</string>
+    <string name="pref_show_app_icon_summary">Deaktivieren, um CrappaLinks im Launcher zu verstecken.</string>
     <string name="toast_type_entries_off">Aus</string>
-    <string name="toast_type_entries_brief">Kurz (die entkürzte URL wird nicht getoastet)</string>
-    <string name="toast_type_entries_full">Voll (entkürzte URL wird getoastet)</string>
-    <string name="toast_message_network">"Keine Netzwerk-Verbindung. URL konnte nicht entkürzt werden: "</string>
-    <string name="toast_message_started">URL entkürzen…</string>
-    <string name="toast_message_done">"URL entkürzt: "</string>
-
+    <string name="toast_type_entries_brief">Kurz (die wiederhergestellte URL wird nicht getoastet)</string>
+    <string name="toast_type_entries_full">Voll (die wiederhergestellte URL wird getoastet)</string>
+    <string name="toast_message_network">"Keine Internet-Verbindung. URL konnte nicht wiederhergestellt werden: "</string>
+    <string name="toast_message_started">URL wiederherstellen…</string>
+    <string name="toast_message_done">"URL wiederhergestellt: "</string>
+    <string name="toast_message_error">"Ein Fehler ist aufgetreten. Bitte mit einem Logcat melden. URL: "</string>
+    <string name="dialog_confirm_open">Möchten Sie die folgende URL öffnen?\n</string>
+    <string name="dialog_yes">Ja</string>
+    <string name="dialog_no">Nein</string>
+	
 </resources>
