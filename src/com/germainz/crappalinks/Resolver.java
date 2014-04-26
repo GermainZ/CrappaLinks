@@ -59,7 +59,7 @@ public class Resolver extends Activity {
             HttpURLConnection c = null;
             try {
                 c = (HttpURLConnection) new URL(url).openConnection();
-                c.setRequestProperty("User-Agent", "com.germainz.crappalinks");
+                c.setRequestProperty("User-Agent", "Mozilla/5.0 (Android; Mobile; rv:28.0) Gecko/28.0 Firefox/28.0");
                 c.setRequestProperty("Accept-Encoding", "identity");
                 c.setConnectTimeout(10000);
                 c.setReadTimeout(15000);
