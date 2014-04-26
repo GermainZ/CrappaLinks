@@ -24,6 +24,7 @@ public class Resolver extends Activity {
 
     private String toastType;
     private boolean confirmOpen;
+    private boolean resolveAll;
     private static final String TOAST_NONE = "0";
     private static final String TOAST_DETAILED = "2";
 
@@ -32,6 +33,7 @@ public class Resolver extends Activity {
         SharedPreferences sharedPreferences = getSharedPreferences("com.germainz.crappalinks_preferences", Context.MODE_WORLD_READABLE);
         toastType = sharedPreferences.getString("pref_toast_type", TOAST_NONE);
         confirmOpen = sharedPreferences.getBoolean("pref_confirm_open", false);
+        resolveAll = sharedPreferences.getBoolean("pref_resolve_all", false);
         new ResolveUrl().execute(getIntent().getDataString());
         finish();
     }
@@ -92,21 +94,28 @@ public class Resolver extends Activity {
 
         protected String doInBackground(String... urls) {
             String redirectUrl = urls[0];
-            String finalUrl = redirectUrl;
 
             // if there's no connection, fail and return the original URL.
             if (((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() == null) {
                 noConnectionError = true;
-                return finalUrl;
+                return redirectUrl;
             }
 
             // Keep trying to resolve the URL until we get a URL that isn't a redirect.
-            while (redirectUrl != null) {
+            if (resolveAll) {
+                String finalUrl = redirectUrl;
+                while (redirectUrl != null) {
+                    redirectUrl = getRedirect(redirectUrl);
+                    if (redirectUrl != null)
+                        finalUrl = redirectUrl;
+                }
+                return finalUrl;
+            } else {
                 redirectUrl = getRedirect(redirectUrl);
-                if (redirectUrl != null)
-                    finalUrl = redirectUrl;
+                while (Helper.isRedirect(Uri.parse(redirectUrl).getHost()))
+                    redirectUrl = getRedirect(redirectUrl);
+                return redirectUrl;
             }
-            return finalUrl;
         }
 
         protected void onPostExecute(final String uri) {

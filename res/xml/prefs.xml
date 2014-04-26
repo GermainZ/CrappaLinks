@@ -43,6 +43,11 @@
         android:summary="@string/pref_confirm_open_summary"/>
     <CheckBoxPreference
         android:defaultValue="true"
+        android:key="pref_resolve_all"
+        android:title="@string/pref_resolve_all_title"
+        android:summary="@string/pref_resolve_all_summary"/>
+    <CheckBoxPreference
+        android:defaultValue="true"
         android:key="pref_show_app_icon"
         android:title="@string/pref_show_app_icon_title"
         android:summary="@string/pref_show_app_icon_summary"/>
