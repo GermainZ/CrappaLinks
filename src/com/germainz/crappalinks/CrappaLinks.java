@@ -4,13 +4,8 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLDecoder;
-import java.util.List;
 
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 
@@ -23,7 +18,7 @@ public class CrappaLinks implements IXposedHookZygoteInit {
     private final static XSharedPreferences PREFS = new XSharedPreferences("com.germainz.crappalinks");
     private final static boolean PREF_UNSHORTEN_URLS = PREFS.getBoolean("pref_unshorten_urls", true);
 
-   public void initZygote(StartupParam startupParam) throws Throwable {
+    public void initZygote(StartupParam startupParam) throws Throwable {
         XC_MethodHook hook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -62,8 +57,13 @@ public class CrappaLinks implements IXposedHookZygoteInit {
             }
         };
 
-        findAndHookMethod("android.app.ContextImpl", null, "startActivity", Intent.class, Bundle.class, hook);
-        findAndHookMethod(Activity.class, "startActivity", Intent.class, Bundle.class, hook);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            findAndHookMethod("android.app.ContextImpl", null, "startActivity", Intent.class, Bundle.class, hook);
+            findAndHookMethod(Activity.class, "startActivity", Intent.class, Bundle.class, hook);
+        } else {
+            findAndHookMethod("android.app.ContextImpl", null, "startActivity", Intent.class, hook);
+            findAndHookMethod(Activity.class, "startActivity", Intent.class, hook);
+        }
 
     }
 
