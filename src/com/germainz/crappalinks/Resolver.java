@@ -106,15 +106,27 @@ public class Resolver extends Activity {
                 String finalUrl = redirectUrl;
                 while (redirectUrl != null) {
                     redirectUrl = getRedirect(redirectUrl);
-                    if (redirectUrl != null)
+                    if (redirectUrl != null) {
+                        // Some hosts are apparently randomly returning a status code of 200
+                        // instead of 3xx. This should avoid infinite loops.
+                        if (redirectUrl.equals(finalUrl))
+                            return finalUrl;
                         finalUrl = redirectUrl;
+                    }
                 }
                 return finalUrl;
             } else {
-                redirectUrl = getRedirect(redirectUrl);
-                while (Helper.isRedirect(Uri.parse(redirectUrl).getHost()))
+                String finalUrl = redirectUrl;
+                while (redirectUrl != null && Helper.isRedirect(Uri.parse(redirectUrl).getHost())) {
                     redirectUrl = getRedirect(redirectUrl);
-                return redirectUrl;
+                    if (redirectUrl != null) {
+                        // Avoid infinite loops.
+                        if (redirectUrl.equals(finalUrl))
+                            return finalUrl;
+                        finalUrl = redirectUrl;
+                    }
+                }
+                return finalUrl;
             }
         }
 

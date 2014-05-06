@@ -19,6 +19,7 @@ public class ConfirmDialog extends Activity {
                 switch (i) {
                     case DialogInterface.BUTTON_POSITIVE:
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                        intent.putExtra("crappalinks", "");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         break;
