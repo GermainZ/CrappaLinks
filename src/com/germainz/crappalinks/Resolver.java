@@ -59,11 +59,8 @@ public class Resolver extends Activity {
             HttpURLConnection c = null;
             try {
                 c = (HttpURLConnection) new URL(url).openConnection();
-                c.setRequestProperty("User-Agent", "Mozilla/5.0 (Android; Mobile; rv:28.0) Gecko/28.0 Firefox/28.0");
-                c.setRequestProperty("Accept-Encoding", "identity");
                 c.setConnectTimeout(10000);
                 c.setReadTimeout(15000);
-                c.setInstanceFollowRedirects(false);
                 c.connect();
                 final int responseCode = c.getResponseCode();
                 // If the response code is 3xx, it's a redirection. Return the real location.
@@ -101,33 +98,21 @@ public class Resolver extends Activity {
                 return redirectUrl;
             }
 
+            HttpURLConnection.setFollowRedirects(false);
+
             // Keep trying to resolve the URL until we get a URL that isn't a redirect.
-            if (resolveAll) {
-                String finalUrl = redirectUrl;
-                while (redirectUrl != null) {
-                    redirectUrl = getRedirect(redirectUrl);
-                    if (redirectUrl != null) {
-                        // Some hosts are apparently randomly returning a status code of 200
-                        // instead of 3xx. This should avoid infinite loops.
-                        if (redirectUrl.equals(finalUrl))
-                            return finalUrl;
-                        finalUrl = redirectUrl;
-                    }
+            String finalUrl = redirectUrl;
+            while (redirectUrl != null &&
+                    ((resolveAll) || (!resolveAll && Helper.isRedirect(Uri.parse(redirectUrl).getHost())))) {
+                redirectUrl = getRedirect(redirectUrl);
+                if (redirectUrl != null) {
+                    // This should avoid infinite loops, just in case.
+                    if (redirectUrl.equals(finalUrl))
+                        return finalUrl;
+                    finalUrl = redirectUrl;
                 }
-                return finalUrl;
-            } else {
-                String finalUrl = redirectUrl;
-                while (redirectUrl != null && Helper.isRedirect(Uri.parse(redirectUrl).getHost())) {
-                    redirectUrl = getRedirect(redirectUrl);
-                    if (redirectUrl != null) {
-                        // Avoid infinite loops.
-                        if (redirectUrl.equals(finalUrl))
-                            return finalUrl;
-                        finalUrl = redirectUrl;
-                    }
-                }
-                return finalUrl;
             }
+            return finalUrl;
         }
 
         protected void onPostExecute(final String uri) {
