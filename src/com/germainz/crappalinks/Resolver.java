@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.net.ConnectException;
@@ -72,12 +73,17 @@ public class Resolver extends Activity {
                         return new URI(url).resolve(location).toString();
                     return location;
                 }
-                // It might also be a redirection using meta tags. MydealZ uses that.
-                else if (c.getURL().getHost().equals("hukd.mydealz.de")) {
+                // It might also be a redirection using meta tags.
+                else {
                     Document d = Jsoup.parse(c.getInputStream(), "UTF-8", url);
                     Elements refresh = d.select("meta[http-equiv=Refresh]");
-                    if (!refresh.isEmpty())
-                        return refresh.first().attr("url");
+                    if (!refresh.isEmpty()) {
+                        Element refreshElement = refresh.first();
+                        if (refreshElement.hasAttr("url"))
+                            return refreshElement.attr("url");
+                        else if (refreshElement.hasAttr("content"))
+                            return refreshElement.attr("content").split("url=")[1];
+                    }
                 }
             } catch (ConnectException | UnknownHostException e) {
                 noConnectionError = true;
