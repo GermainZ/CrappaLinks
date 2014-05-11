@@ -15,6 +15,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.net.ConnectException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import java.net.UnknownHostException;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -99,6 +101,10 @@ public class Resolver extends Activity {
             }
 
             HttpURLConnection.setFollowRedirects(false);
+            // Use the cookie manager so that cookies are stored. Useful for some hosts that keep
+            // redirecting us indefinitely unless the set cookie is detected.
+            CookieManager cookieManager = new CookieManager();
+            CookieHandler.setDefault(cookieManager);
 
             // Keep trying to resolve the URL until we get a URL that isn't a redirect.
             String finalUrl = redirectUrl;
