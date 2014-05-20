@@ -36,9 +36,13 @@ public class CrappaLinks implements IXposedHookZygoteInit {
 
                 // Unmask the URL (nested masked URLs, too.)
                 Uri unmaskedUrl = intentData;
+                Uri finalUrl = unmaskedUrl;
                 int i = Helper.getMaskedId(unmaskedUrl);
                 while (i >= 0) {
                     unmaskedUrl = Helper.unmaskLink(unmaskedUrl, i);
+                    if (unmaskedUrl.equals(finalUrl))
+                        break;
+                    finalUrl = unmaskedUrl;
                     i = Helper.getMaskedId(unmaskedUrl);
                 }
 
