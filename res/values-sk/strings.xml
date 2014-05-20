@@ -1,0 +1,31 @@
+<resources>
+
+    <string name="app_name">CrappaLinks</string>
+    <string name="pref_support_title">CrappaLinks</string>
+    <string name="pref_support_summary">Od GermainZ.</string>
+    <string name="pref_xposed_title">Xposed Framework</string>
+    <string name="pref_xposed_summary">Tento modul využíva Xposed Framework od rovo89 a Tungstwenty.</string>
+    <string name="pref_jsoup_title">jsoup</string>
+    <string name="pref_jsoup_summary">Knižnica jsoup od Jonathan Hedley je použitá na obnovenie niektorých skrátených adries.</string>
+    <string name="pref_unshorten_urls_title">Obnoviť adresy</string>
+    <string name="pref_unshorten_urls_summary">Obnoviť podporované adresy.</string>
+    <string name="pref_toast_type_title">Druh toast oznámenia</string>
+    <string name="pref_toast_type_summary">Zobrazí sa pred/po obnovení adresy</string>
+    <string name="pref_confirm_open_title">Potvrdenie obnovenia adresy</string>
+    <string name="pref_confirm_open_summary">Opýta sa pred otvorením skrátenej adresy.</string>
+    <string name="pref_resolve_all_title">Obnoviť všetky adresy</string>
+    <string name="pref_resolve_all_summary">Pokúsi sa obnoviť všetky skrátené adresy, aj keď skracovač nie je známy. Vhodné pre vnorené adresy, ale spotrebuje viac prenesených dát.</string>
+    <string name="pref_show_app_icon_title">Zobraziť ikonu aplikácie</string>
+    <string name="pref_show_app_icon_summary">Zrušte pre skrytie ikony tejto aplikácie v menu aplikácií.</string>
+    <string name="toast_type_entries_off">VYP</string>
+    <string name="toast_type_entries_brief">Stručný (nezobrazí obnovenú adresu)</string>
+    <string name="toast_type_entries_full">Plný (zobrazí obnovenú adresu)</string>
+    <string name="toast_message_network">"Žiadne internetové pripojenie. Nemožno obnoviť adresu: "</string>
+    <string name="toast_message_started">Obnovovanie adresy…</string>
+    <string name="toast_message_done">"Obnovená adresa: "</string>
+    <string name="toast_message_error">"Vyskytla sa chyba. Prosím, pošlite toto spolu so záznamom. Adresa: "</string>
+    <string name="dialog_confirm_open">Chceli by ste otvoriť nasledujúcu adresu?\n</string>
+    <string name="dialog_yes">Áno</string>
+    <string name="dialog_no">Nie</string>
+
+</resources>
