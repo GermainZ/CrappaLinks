@@ -9,7 +9,7 @@
     <string name="pref_jsoup_summary">A jsoup library, criada por Jonathan Hedley, é usada para desencurtar algumas URLs.</string>
     <string name="pref_unshorten_urls_title">Desencurtar URLs</string>
     <string name="pref_unshorten_urls_summary">Desencurtar as URLs suportadas.</string>
-    <string name="pref_toast_type_title">Tipo de notificação 'toast'</string>
+    <string name="pref_toast_type_title">"Tipo de notificação 'toast'"</string>
     <string name="pref_toast_type_summary">Mostrada antes/depois de a URL ser desencurtada</string>
     <string name="pref_confirm_open_title">Confirmação para URLs encurtadas</string>
     <string name="pref_confirm_open_summary">Confirmar antes de abrir URLs encurtadas.</string>
