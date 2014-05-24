@@ -35,17 +35,20 @@
         android:dialogTitle="@string/pref_toast_type_title"
         android:defaultValue="2"
         android:entries="@array/toast_type_entries"
-        android:entryValues="@array/toast_type_values"/>
+        android:entryValues="@array/toast_type_values"
+        android:dependency="pref_unshorten_urls"/>
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="pref_confirm_open"
         android:title="@string/pref_confirm_open_title"
-        android:summary="@string/pref_confirm_open_summary"/>
+        android:summary="@string/pref_confirm_open_summary"
+        android:dependency="pref_unshorten_urls"/>
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="pref_resolve_all"
         android:title="@string/pref_resolve_all_title"
-        android:summary="@string/pref_resolve_all_summary"/>
+        android:summary="@string/pref_resolve_all_summary"
+        android:dependency="pref_unshorten_urls"/>
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="pref_show_app_icon"
