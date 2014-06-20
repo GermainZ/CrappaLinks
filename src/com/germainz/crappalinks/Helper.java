@@ -21,15 +21,15 @@ public class Helper {
     // Hosts that mask links
     private static final String[] MASK_HOSTS = {"m.facebook.com", "link2.tapatalk.com", "link.tapatalk.com", "google.com",
             "m.vk.com", "click.linksynergy.com", "youtube.com", "m.scope.am", "redirectingat.com", "jdoqocy.com",
-            "viglink.com", "youtube.com", "pt.tapatalk.com"};
+            "viglink.com", "youtube.com", "pt.tapatalk.com", "vk.com"};
     // If the masked URL is in the form <host>/<segment>, specify that segment
     // for example, Facebook's masked URLs look like http://m.facebook.com/l.php…
     private static final String[] MASK_HOSTS_SEG = {"l.php", null, null, "url", "away.php", null, "attribution_link", "api",
-            "rewrite.php", null, "api", "attribution_link", "redirect.php"};
+            "rewrite.php", null, "api", "attribution_link", "redirect.php", "away.php"};
     // Which parameter should we get?
     // for example, Facebook's masked URLs look like http://m.facebook.com/l.php?u=<actual URL>…
     private static final String[] MASK_HOSTS_PAR = {"u", "url", "out", "q", "to", "RD_PARM1", "u", "out", "url", "url", "out",
-            "a", "url"};
+            "a", "url", "to"};
 
     /**
      * Unmask the URI and return it
