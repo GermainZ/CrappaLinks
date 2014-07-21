@@ -32,8 +32,8 @@
     <string name="toast_message_network">"No network connection. Couldn\'t unshorten URL: "</string>
     <string name="toast_message_started">Unshortening URL…</string>
     <string name="toast_message_done">"Unshortened URL: "</string>
-    <string name="toast_message_error">"An error has occurred. Please report this along with a
-        logcat. URL: "
+    <string name="toast_message_error">"An error has occurred. Please report this along with a "
+        "logcat. URL: "
     </string>
     <string name="dialog_confirm_open">Would you like to open the following URL?\n</string>
     <string name="dialog_yes">Yes</string>

@@ -25,7 +25,6 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.UnknownHostException;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 
 public class Resolver extends Activity {
@@ -77,8 +76,8 @@ public class Resolver extends Activity {
                 // If the response code is 3xx, it's a redirection. Return the real location.
                 if (responseCode >= 300 && responseCode < 400) {
                     String location = c.getHeaderField("Location");
-                    if (!new URI(location).isAbsolute())
-                        return new URI(url).resolve(location).toString();
+                    if (!Helper.getURI(location).isAbsolute())
+                        return Helper.getURI(url).resolve(location).toString();
                     return location;
                 }
                 // It might also be a redirection using meta tags.
