@@ -49,9 +49,11 @@ public class CrappaLinks implements IXposedHookZygoteInit {
                 // Does the URL need to be unshortened?
                 // The hasExtra check is to check if the URL is sent from our own app after being
                 // unshortened, so we,don't start an infinite loop.
-                if (PREF_UNSHORTEN_URLS && !intent.hasExtra("crappalinks") && Helper.isRedirect(unmaskedUrl.getHost())) {
+                if (PREF_UNSHORTEN_URLS && !intent.hasExtra("crappalinks") &&
+                        Helper.isRedirect(unmaskedUrl.getHost())) {
                     // Have the shortened URL open with our activity. It'll be handled there.
-                    intent.setComponent(ComponentName.unflattenFromString("com.germainz.crappalinks/com.germainz.crappalinks.Resolver"));
+                    intent.setComponent(ComponentName.unflattenFromString(
+                            "com.germainz.crappalinks/com.germainz.crappalinks.Resolver"));
                 }
 
                 // We just set the intent's data to the unmasked URL. If this URL needs to be unshortened,

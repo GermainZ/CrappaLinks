@@ -10,15 +10,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.CookieHandler;
@@ -39,21 +37,26 @@ public class Resolver extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = getSharedPreferences("com.germainz.crappalinks_preferences", Context.MODE_WORLD_READABLE);
+        SharedPreferences sharedPreferences = getSharedPreferences("com.germainz.crappalinks_preferences",
+                Context.MODE_WORLD_READABLE);
         toastType = sharedPreferences.getString("pref_toast_type", TOAST_NONE);
         confirmOpen = sharedPreferences.getBoolean("pref_confirm_open", false);
         resolveAll = sharedPreferences.getBoolean("pref_resolve_all", false);
         useLongUrl = sharedPreferences.getBoolean("pref_use_long_url", false);
         new ResolveUrl().execute(getIntent().getDataString());
+        /* Ideally, this would be a service, but we're redirecting intents via Xposed.
+         * We finish the activity immediately so that the user can still interact with the
+         * foreground app while we unshorten the URL in the background.
+         */
         finish();
     }
 
-    class ResolveUrl extends AsyncTask<String, Void, String> {
-        Context context = null;
+    private class ResolveUrl extends AsyncTask<String, Void, String> {
+        private Context context = null;
         // unknown error while connecting
-        boolean connectionError = false;
+        private boolean connectionError = false;
         // connection missing/not working
-        boolean noConnectionError = false;
+        private boolean noConnectionError = false;
 
         private ResolveUrl() {
             context = Resolver.this;
@@ -62,7 +65,8 @@ public class Resolver extends Activity {
         @Override
         protected void onPreExecute() {
             if (!toastType.equals(TOAST_NONE))
-                Toast.makeText(context, getString(R.string.toast_message_started), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.toast_message_started),
+                        Toast.LENGTH_SHORT).show();
         }
 
         private String getRedirect(String url) {
@@ -112,14 +116,12 @@ public class Resolver extends Activity {
                 c.setConnectTimeout(10000);
                 c.setReadTimeout(15000);
                 c.connect();
-                // Response format: {"long-url": "URL", "title": "Title"}
-                JsonParser jsonParser = new JsonParser();
-                JsonElement root = jsonParser.parse(new InputStreamReader(c.getInputStream()));
-                JsonObject jsonObject = root.getAsJsonObject();
                 final int responseCode = c.getResponseCode();
                 if (responseCode == 200) {
-                    String longUrl = jsonObject.get("long-url").getAsString();
-                    return longUrl;
+                    // Response format: {"long-url": "URL"}
+                    JSONObject jsonObject = new JSONObject(new BufferedReader(
+                            new InputStreamReader(c.getInputStream())).readLine());
+                    return jsonObject.getString("long-url");
                 }
             } catch (ConnectException | UnknownHostException e) {
                 noConnectionError = true;
@@ -137,7 +139,8 @@ public class Resolver extends Activity {
             String redirectUrl = urls[0];
 
             // if there's no connection, fail and return the original URL.
-            if (((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() == null) {
+            if (((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE))
+                    .getActiveNetworkInfo() == null) {
                 noConnectionError = true;
                 return redirectUrl;
             }

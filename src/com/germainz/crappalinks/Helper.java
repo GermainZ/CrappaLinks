@@ -13,25 +13,27 @@ import java.util.List;
 public class Helper {
 
     // Hosts that shorten URLs - we need to follow the redirections to get the real URL for those
-    private static final String[] REDIRECT_HOSTS = {"t.co", "youtu.be", "bit.ly", "menea.me", "kcy.me", "goo.gl", "ow.ly",
-            "j.mp", "redes.li", "dlvr.it", "tinyurl.com", "tmblr.co", "reut.rs", "sns.mx", "wp.me", "4sq.com",
+    private static final String[] REDIRECT_HOSTS = {"t.co", "youtu.be", "bit.ly", "menea.me", "kcy.me", "goo.gl",
+            "ow.ly", "j.mp", "redes.li", "dlvr.it", "tinyurl.com", "tmblr.co", "reut.rs", "sns.mx", "wp.me", "4sq.com",
             "ed.cl", "huff.to", "mun.do", "cos.as", "flip.it", "amzn.to", "cort.as", "on.cnn.com", "fb.me",
             "shar.es", "spr.ly", "v.ht", "v0v.in", "redd.it", "bitly.com", "tl.gd", "wh.gov", "hukd.mydealz.de",
             "untp.i", "kck.st", "engt.co", "nyti.ms", "cnnmon.ie", "vrge.co", "is.gd", "cnn.it", "spon.de",
             "affiliation.appgratuites-network.com", "t.cn", "url.cn", "ht.ly", "po.st", "ohmyyy.gt"};
 
     // Hosts that mask links
-    private static final String[] MASK_HOSTS = {"m.facebook.com", "link2.tapatalk.com", "link.tapatalk.com", "google.com",
-            "m.vk.com", "click.linksynergy.com", "youtube.com", "m.scope.am", "redirectingat.com", "jdoqocy.com",
-            "viglink.com", "youtube.com", "pt.tapatalk.com"};
-    // If the masked URL is in the form <host>/<segment>, specify that segment
-    // for example, Facebook's masked URLs look like http://m.facebook.com/l.php…
-    private static final String[] MASK_HOSTS_SEG = {"l.php", null, null, "url", "away.php", null, "attribution_link", "api",
-            "rewrite.php", null, "api", "attribution_link", "redirect.php"};
-    // Which parameter should we get?
-    // for example, Facebook's masked URLs look like http://m.facebook.com/l.php?u=<actual URL>…
-    private static final String[] MASK_HOSTS_PAR = {"u", "url", "out", "q", "to", "RD_PARM1", "u", "out", "url", "url", "out",
-            "a", "url"};
+    private static final String[] MASK_HOSTS = {"m.facebook.com", "link2.tapatalk.com", "link.tapatalk.com",
+            "google.com", "m.vk.com", "click.linksynergy.com", "youtube.com", "m.scope.am", "redirectingat.com",
+            "jdoqocy.com", "viglink.com", "youtube.com", "pt.tapatalk.com"};
+    /* If the masked URL is in the form <host>/<segment>, specify that segment
+     * for example, Facebook's masked URLs look like http://m.facebook.com/l.php…
+     */
+    private static final String[] MASK_HOSTS_SEG = {"l.php", null, null, "url", "away.php", null, "attribution_link",
+            "api", "rewrite.php", null, "api", "attribution_link", "redirect.php"};
+    /* Which parameter should we get?
+     * for example, Facebook's masked URLs look like http://m.facebook.com/l.php?u=<actual URL>…
+     */
+    private static final String[] MASK_HOSTS_PAR = {"u", "url", "out", "q", "to", "RD_PARM1", "u", "out", "url", "url",
+            "out", "a", "url"};
 
     /**
      * Unmask the URI and return it
@@ -75,8 +77,8 @@ public class Helper {
      * Return true if the host is a known URL shortener
      */
     public static boolean isRedirect(String host) {
-        for (String REDIRECT_HOST : REDIRECT_HOSTS) {
-            if (host.endsWith(REDIRECT_HOST))
+        for (String redirectHost : REDIRECT_HOSTS) {
+            if (host.endsWith(redirectHost))
                 return true;
         }
         return false;
