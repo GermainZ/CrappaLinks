@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
     <Preference
         android:key="pref_support"
         android:title="@string/pref_support_title"
         android:summary="@string/pref_support_summary">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="http://forum.xda-developers.com/showthread.php?t=2603868"/>
+            android:data="http://forum.xda-developers.com/showthread.php?t=2603868" />
     </Preference>
+
     <Preference
         android:title="@string/pref_xposed_title"
         android:summary="@string/pref_xposed_summary">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="http://forum.xda-developers.com/showthread.php?t=1574401"/>
+            android:data="http://forum.xda-developers.com/showthread.php?t=1574401" />
     </Preference>
+
     <Preference
         android:title="@string/pref_jsoup_title"
         android:summary="@string/pref_jsoup_summary">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="http://jsoup.org/"/>
+            android:data="http://jsoup.org/" />
     </Preference>
+
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="pref_unshorten_urls"
         android:title="@string/pref_unshorten_urls_title"
-        android:summary="@string/pref_unshorten_urls_summary"/>
+        android:summary="@string/pref_unshorten_urls_summary" />
+
     <ListPreference
         android:key="pref_toast_type"
         android:title="@string/pref_toast_type_title"
@@ -36,28 +41,33 @@
         android:defaultValue="2"
         android:entries="@array/toast_type_entries"
         android:entryValues="@array/toast_type_values"
-        android:dependency="pref_unshorten_urls"/>
+        android:dependency="pref_unshorten_urls" />
+
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="pref_confirm_open"
         android:title="@string/pref_confirm_open_title"
         android:summary="@string/pref_confirm_open_summary"
-        android:dependency="pref_unshorten_urls"/>
+        android:dependency="pref_unshorten_urls" />
+
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="pref_resolve_all"
         android:title="@string/pref_resolve_all_title"
         android:summary="@string/pref_resolve_all_summary"
-        android:dependency="pref_unshorten_urls"/>
+        android:dependency="pref_unshorten_urls" />
+
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="pref_use_long_url"
         android:title="@string/pref_use_long_url_title"
         android:summary="@string/pref_use_long_url_summary"
-        android:dependency="pref_unshorten_urls"/>
+        android:dependency="pref_unshorten_urls" />
+
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="pref_show_app_icon"
         android:title="@string/pref_show_app_icon_title"
-        android:summary="@string/pref_show_app_icon_summary"/>
+        android:summary="@string/pref_show_app_icon_summary" />
+
 </PreferenceScreen>
