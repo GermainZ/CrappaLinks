@@ -10,11 +10,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -28,8 +33,10 @@ public class Resolver extends Activity {
     private String toastType;
     private boolean confirmOpen;
     private boolean resolveAll;
+    private boolean useLongUrl;
     private static final String TOAST_NONE = "0";
     private static final String TOAST_DETAILED = "2";
+    private static final String LONG_URL_BASE_URL = "http://api.longurl.org/v2/expand?format=json&title=1&url=";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +44,7 @@ public class Resolver extends Activity {
         toastType = sharedPreferences.getString("pref_toast_type", TOAST_NONE);
         confirmOpen = sharedPreferences.getBoolean("pref_confirm_open", false);
         resolveAll = sharedPreferences.getBoolean("pref_resolve_all", false);
+        useLongUrl = sharedPreferences.getBoolean("pref_use_long_url", false);
         new ResolveUrl().execute(getIntent().getDataString());
         finish();
     }
@@ -97,6 +105,35 @@ public class Resolver extends Activity {
             return null;
         }
 
+        private String getRedirectUsingLongURL(String url) {
+            HttpURLConnection c = null;
+            try {
+                c = (HttpURLConnection) new URL(LONG_URL_BASE_URL + url).openConnection();
+                c.setRequestProperty("User-Agent", "CrappaLinks");
+                c.setConnectTimeout(10000);
+                c.setReadTimeout(15000);
+                c.connect();
+                // Response format: {"long-url": "URL", "title": "Title"}
+                JsonParser jsonParser = new JsonParser();
+                JsonElement root = jsonParser.parse(new InputStreamReader(c.getInputStream()));
+                JsonObject jsonObject = root.getAsJsonObject();
+                final int responseCode = c.getResponseCode();
+                if (responseCode == 200) {
+                    String longUrl = jsonObject.get("long-url").getAsString();
+                    return longUrl;
+                }
+            } catch (ConnectException | UnknownHostException e) {
+                noConnectionError = true;
+            } catch (Exception e) {
+                connectionError = true;
+                e.printStackTrace();
+            } finally {
+                if (c != null)
+                    c.disconnect();
+            }
+            return url;
+        }
+
         protected String doInBackground(String... urls) {
             String redirectUrl = urls[0];
 
@@ -106,25 +143,29 @@ public class Resolver extends Activity {
                 return redirectUrl;
             }
 
-            HttpURLConnection.setFollowRedirects(false);
-            // Use the cookie manager so that cookies are stored. Useful for some hosts that keep
-            // redirecting us indefinitely unless the set cookie is detected.
-            CookieManager cookieManager = new CookieManager();
-            CookieHandler.setDefault(cookieManager);
+            if (useLongUrl) {
+                return getRedirectUsingLongURL(redirectUrl);
+            } else {
+                HttpURLConnection.setFollowRedirects(false);
+                // Use the cookie manager so that cookies are stored. Useful for some hosts that keep
+                // redirecting us indefinitely unless the set cookie is detected.
+                CookieManager cookieManager = new CookieManager();
+                CookieHandler.setDefault(cookieManager);
 
-            // Keep trying to resolve the URL until we get a URL that isn't a redirect.
-            String finalUrl = redirectUrl;
-            while (redirectUrl != null &&
-                    ((resolveAll) || (!resolveAll && Helper.isRedirect(Uri.parse(redirectUrl).getHost())))) {
-                redirectUrl = getRedirect(redirectUrl);
-                if (redirectUrl != null) {
-                    // This should avoid infinite loops, just in case.
-                    if (redirectUrl.equals(finalUrl))
-                        return finalUrl;
-                    finalUrl = redirectUrl;
+                // Keep trying to resolve the URL until we get a URL that isn't a redirect.
+                String finalUrl = redirectUrl;
+                while (redirectUrl != null &&
+                        ((resolveAll) || (!resolveAll && Helper.isRedirect(Uri.parse(redirectUrl).getHost())))) {
+                    redirectUrl = getRedirect(redirectUrl);
+                    if (redirectUrl != null) {
+                        // This should avoid infinite loops, just in case.
+                        if (redirectUrl.equals(finalUrl))
+                            return finalUrl;
+                        finalUrl = redirectUrl;
+                    }
                 }
+                return finalUrl;
             }
-            return finalUrl;
         }
 
         protected void onPostExecute(final String uri) {
