@@ -1,41 +1,41 @@
 <resources>
 
-	<string name="app_name">CrappaLinks</string>
-	<string name="pref_support_title">CrappaLinks</string>
-	<string name="pref_support_summary">Código por GermainZ.</string>
-	<string name="pref_xposed_title">Xposed Installer</string>
-	<string name="pref_xposed_summary">Este módulo utiliza el  Xposed Installer de rovo89 y
-		Tungstwenty.
-	</string>
-	<string name="pref_jsoup_title">jsoup</string>
-	<string name= "pref_jsoup_summary"> La biblioteca jsoup de Jonathan Hedley, se utiliza para acortar algunas
-		URLs.
-	</string>
-	<string name="pref_unshorten_urls_title">Acortar URLs</string>
-	<string name="pref_unshorten_urls_summary">Autoacorte apoyo URLs.</string>
-	<string name="pref_toast_type_title"> Toast Tipo</string>
-	<string name="pref_toast_type_summary">Mostrado antes/después de una URL se acortaran</string>
-	<string name="pref_confirm_open_title">Confirmación URLs acortadas</string>
-	<string name="pref_confirm_open_summary">Pedir confirmación antes de abrir direcciones URL acortadas.
-	</string>
-	<string name="pref_resolve_all_title">Resolver todas las URL</string>
-	<string name="pref_resolve_all_summary">Trate de resolver todas las URL en lugar de detenerse si el host
-		no puede utilizar un acortador conocido.Útil para URLs anidadas, pero consume más datos.
-	</string>
-	<string name="pref_show_app_icon_title">Mostrar icono lanzador(Launher)</string>
-	<string name="pref_show_app_icon_summary">Desactivar, para ocultar icono CrappaLink</string>
-	<string name="toast_type_entries_off">Off</string>
-	<string name="toast_type_entries_brief">Breve (la URL acortada no se rompe)</string>
-	<string name="toast_type_entries_full">Completo (URL acortadas)</string>
-	<string name="toast_message_network">"Sin conexión de red, NO se puede acortar URL: "</string>
-	<string name="toast_message_started">Acortando URL...</string>
-	<string name="toast_message_done">"URL acortada: "</string>
-	<string name="toast_message_error">"Se ha producido un error. Por favor, informe junto con una
-		Logcat. URL: "
-	</string>
-	<string name="dialog_confirm_open">¿Quieres abrir la siguiente URL?\n</string>
-	<string name="dialog_yes">Sí</string>
-	<string name="dialog_no">No</string>
-	
+    <string name="app_name">CrappaLinks</string>
+    <string name="pref_support_title">CrappaLinks</string>
+    <string name="pref_support_summary">Código por GermainZ</string>
+    <string name="pref_xposed_title">Xposed Installer</string>
+    <string name="pref_xposed_summary">Este módulo utiliza el  Xposed Installer de rovo89 y
+        Tungstwenty.
+    </string>
+    <string name="pref_jsoup_title">jsoup</string>
+    <string name= "pref_jsoup_summary"> La biblioteca jsoup de Jonathan Hedley, se utiliza para acortar algunas
+        URLs.
+    </string>
+    <string name="pref_unshorten_urls_title">Acortar URLs</string>
+    <string name="pref_unshorten_urls_summary">Autoacorte apoyo URLs</string>
+    <string name="pref_toast_type_title"> Toast Tipo</string>
+    <string name="pref_toast_type_summary">Mostrado antes/después de una URL se acortaran</string>
+    <string name="pref_confirm_open_title">Confirmación URLs acortadas</string>
+    <string name="pref_confirm_open_summary">Pedir confirmación antes de abrir direcciones URL acortadas.
+    </string>
+    <string name="pref_resolve_all_title">Resolver todas las URL</string>
+    <string name="pref_resolve_all_summary">Trate de resolver todas las URL en lugar de detenerse si el host
+        no puede utilizar un acortador conocido.Útil para URLs anidadas, pero consume más datos.
+    </string>
+    <string name="pref_show_app_icon_title">Mostrar icono lanzador(Launher)</string>
+    <string name="pref_show_app_icon_summary">Desactivar, para ocultar icono CrappaLink</string>
+    <string name="toast_type_entries_off">Off</string>
+    <string name="toast_type_entries_brief">Breve (la URL acortada no se rompe)</string>
+    <string name="toast_type_entries_full">Completo (URL acortadas)</string>
+    <string name="toast_message_network">"Sin conexión de red, NO se puede acortar URL: "</string>
+    <string name="toast_message_started">Acortando URL…</string>
+    <string name="toast_message_done">"URL acortada: "</string>
+    <string name="toast_message_error">"Se ha producido un error. Por favor, informe junto con una
+        Logcat. URL: "
+    </string>
+    <string name="dialog_confirm_open">¿Quieres abrir la siguiente URL?\n</string>
+    <string name="dialog_yes">Sí</string>
+    <string name="dialog_no">No</string>
+    
 </resources>
 

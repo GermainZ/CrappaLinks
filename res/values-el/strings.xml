@@ -2,17 +2,17 @@
 
     <string name="app_name">CrappaLinks</string>
     <string name="pref_support_title">CrappaLinks</string>
-    <string name="pref_support_summary">Προγραμματιστής GermainZ.</string>
+    <string name="pref_support_summary">Προγραμματιστής GermainZ</string>
     <string name="pref_xposed_title">Xposed Framework</string>
-    <string name="pref_xposed_summary">Αυτή η εφαρμογή χρησιμοπoιεί το Xposed Framework από τους rovo89 και Tungstwenty.</string>
+    <string name="pref_xposed_summary">Αυτή η εφαρμογή χρησιμοπoιεί το Xposed Framework από τους rovo89 και Tungstwenty</string>
     <string name="pref_jsoup_title">jsoup</string>
-    <string name="pref_jsoup_summary">Η βιβλιοθήκη jsoup του Jonathan Hedley έχει χρησιμοποιηθεί για την αποκρυπτογράφηση μερικών συνδέσμων.</string>
+    <string name="pref_jsoup_summary">Η βιβλιοθήκη jsoup του Jonathan Hedley έχει χρησιμοποιηθεί για την αποκρυπτογράφηση μερικών συνδέσμων</string>
     <string name="pref_unshorten_urls_title">Αποκρυπτογράφηση Συνδέσμων</string>
-    <string name="pref_unshorten_urls_summary">Αποκρυπτογράφηση υποστηριζόμενων συνδέσμων.</string>
+    <string name="pref_unshorten_urls_summary">Αποκρυπτογράφηση υποστηριζόμενων συνδέσμων</string>
     <string name="pref_toast_type_title">Τύποι Ειδοποιήσεων</string>
     <string name="pref_toast_type_summary">Εμφάνιση πριν/μετά την αποκρυπτογράφηση ενός συνδέσμου</string>
     <string name="pref_confirm_open_title">Επιβεβαίωση κρυπτογραφημένων συνδέσμων</string>
-    <string name="pref_confirm_open_summary">Επιβεβαίωση πριν το άνοιγμα κρυπτογραφημένων συνδέσμων.</string>
+    <string name="pref_confirm_open_summary">Επιβεβαίωση πριν το άνοιγμα κρυπτογραφημένων συνδέσμων</string>
     <string name="pref_show_app_icon_title">Εμφάνιση εικονιδίου εκκινητή εφαρμογών</string>
     <string name="pref_show_app_icon_summary">Aπενεργοποίηση για την απόκρυψη του εικονιδίου εκκίνησης της εφαρμογής CrappaLink</string>
     <string name="toast_type_entries_off">Κλειστές</string>

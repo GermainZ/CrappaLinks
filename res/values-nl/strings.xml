@@ -2,19 +2,19 @@
 
     <string name="app_name">CrappaLinks</string>
     <string name="pref_support_title">CrappaLinks</string>
-    <string name="pref_support_summary">Gecodeerd door GermainZ.</string>
+    <string name="pref_support_summary">Gecodeerd door GermainZ</string>
     <string name="pref_xposed_title">Xposed Framework</string>
-    <string name="pref_xposed_summary">Deze module gebruikt het Xposed Framework door rovo89 en Tungstwenty.</string>
+    <string name="pref_xposed_summary">Deze module gebruikt het Xposed Framework door rovo89 en Tungstwenty</string>
     <string name="pref_jsoup_title">jsoup</string>
-    <string name="pref_jsoup_summary">De jsoup bibliotheek door Jonathan Hedley is gebruikt voor het verlengen van sommige URLs.</string>
+    <string name="pref_jsoup_summary">De jsoup bibliotheek door Jonathan Hedley is gebruikt voor het verlengen van sommige URLs</string>
     <string name="pref_unshorten_urls_title">Verleng URLs</string>
-    <string name="pref_unshorten_urls_summary">Verleng ondersteunde URLs.</string>
+    <string name="pref_unshorten_urls_summary">Verleng ondersteunde URLs</string>
     <string name="pref_toast_type_title">Toast Type</string>
     <string name="pref_toast_type_summary">Toon voor/na een URL word verlengd</string>
     <string name="pref_confirm_open_title">Verkorte URLs Confirmatie</string>
-    <string name="pref_confirm_open_summary">Vraag een confirmatie voor het openenen van verkorte URLs.</string>
+    <string name="pref_confirm_open_summary">Vraag een confirmatie voor het openenen van verkorte URLs</string>
     <string name="pref_show_app_icon_title">Toon launcher icoon</string>
-    <string name="pref_show_app_icon_summary">Schakel uit om CrappaLink\'s launcher icoon te verbergen.</string>
+    <string name="pref_show_app_icon_summary">Schakel uit om CrappaLink\'s launcher icoon te verbergen</string>
     <string name="toast_type_entries_off">Uit</string>
     <string name="toast_type_entries_brief">Bondig (de verlengde URL word niet getoast)</string>
     <string name="toast_type_entries_full">Volledig (toast verlengde URL)</string>
