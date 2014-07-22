@@ -2,26 +2,29 @@
 
     <string name="app_name">CrappaLinks</string>
     <string name="pref_support_title">CrappaLinks</string>
-    <string name="pref_support_summary">Coded by GermainZ.</string>
+    <string name="pref_support_summary">Coded by GermainZ. Tap to visit the support thread</string>
     <string name="pref_xposed_title">Xposed Framework</string>
-    <string name="pref_xposed_summary">This module uses the Xposed Framework by rovo89 and Tungstwenty.</string>
+    <string name="pref_xposed_summary">This module uses the Xposed Framework by rovo89 and Tungstwenty</string>
     <string name="pref_jsoup_title">jsoup</string>
-    <string name="pref_jsoup_summary">The jsoup library by Jonathan Hedley is used to unshorten some URLs.</string>
+    <string name="pref_jsoup_summary">The jsoup library by Jonathan Hedley is used to unshorten some URLs</string>
     <string name="pref_unshorten_urls_title">Unshorten URLs</string>
-    <string name="pref_unshorten_urls_summary">Unshorten supported URLs.</string>
+    <string name="pref_unshorten_urls_summary">Unshorten supported URLs</string>
     <string name="pref_toast_type_title">Toast Type</string>
     <string name="pref_toast_type_summary">Shown before/after a URL gets unshortened</string>
     <string name="pref_confirm_open_title">Shortened URLs Confirmation</string>
-    <string name="pref_confirm_open_summary">Ask for confirmation before opening shortened URLs.</string>
+    <string name="pref_confirm_open_summary">Ask for confirmation before opening shortened URLs</string>
     <string name="pref_resolve_all_title">Resolve All URLs</string>
     <string name="pref_resolve_all_summary">Try to resolve all URLs instead of stopping if the host isn\'t a known
-        shortener. Useful for nested URLs, but consumes more bandwidth.</string>
+        shortener. Useful for nested URLs, but consumes more bandwidth</string>
     <string name="pref_use_long_url_title">Use longurl.org</string>
-    <string name="pref_use_long_url_summary">Unshorten URLs using the LongURL API.</string>
+    <string name="pref_use_long_url_summary">Unshorten URLs using the LongURL API</string>
     <string name="pref_show_app_icon_title">Show launcher icon</string>
-    <string name="pref_show_app_icon_summary">Disable to hide CrappaLink\'s launcher icon.</string>
+    <string name="pref_show_app_icon_summary">Disable to hide CrappaLink\'s launcher icon</string>
     <string name="pref_submit_title">Submit new URLs</string>
-    <string name="pref_submit_summary">Submit URL shorteners/maskers that you\'d like to see added.</string>
+    <string name="pref_submit_summary">Submit URL shorteners/maskers that you\'d like to see added</string>
+    <string name="category_unshort">Unshorten URLs</string>
+    <string name="category_about">About</string>
+    <string name="category_other">Other</string>
     <string name="toast_type_entries_off">Off</string>
     <string name="toast_type_entries_brief">Brief (the unshortened URL is not toasted)</string>
     <string name="toast_type_entries_full">Full (toast unshortened URL)</string>
