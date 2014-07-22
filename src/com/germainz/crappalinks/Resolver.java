@@ -92,8 +92,8 @@ public class Resolver extends Activity {
                         Element refreshElement = refresh.first();
                         if (refreshElement.hasAttr("url"))
                             return refreshElement.attr("url");
-                        else if (refreshElement.hasAttr("content"))
-                            return refreshElement.attr("content").split("url=")[1];
+                        else if (refreshElement.hasAttr("content") && refreshElement.attr("content").contains("url="))
+                            return refreshElement.attr("content").split("url=")[1].replaceAll("^'|'$", "");
                     }
                 }
             } catch (ConnectException | UnknownHostException e) {
