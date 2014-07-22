@@ -22,7 +22,7 @@ public class Helper {
 
     // Hosts that mask links
     private static final String[] MASK_HOSTS = {"m.facebook.com", "link2.tapatalk.com", "link.tapatalk.com",
-            "google.com", "m.vk.com", "click.linksynergy.com", "youtube.com", "m.scope.am", "redirectingat.com",
+            "google.com", "vk.com", "click.linksynergy.com", "youtube.com", "m.scope.am", "redirectingat.com",
             "jdoqocy.com", "viglink.com", "youtube.com", "pt.tapatalk.com"};
     /* If the masked URL is in the form <host>/<segment>, specify that segment
      * for example, Facebook's masked URLs look like http://m.facebook.com/l.php…
