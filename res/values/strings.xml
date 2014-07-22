@@ -20,6 +20,8 @@
     <string name="pref_use_long_url_summary">Unshorten URLs using the LongURL API.</string>
     <string name="pref_show_app_icon_title">Show launcher icon</string>
     <string name="pref_show_app_icon_summary">Disable to hide CrappaLink\'s launcher icon.</string>
+    <string name="pref_submit_title">Submit new URLs</string>
+    <string name="pref_submit_summary">Submit URL shorteners/maskers that you\'d like to see added.</string>
     <string name="toast_type_entries_off">Off</string>
     <string name="toast_type_entries_brief">Brief (the unshortened URL is not toasted)</string>
     <string name="toast_type_entries_full">Full (toast unshortened URL)</string>

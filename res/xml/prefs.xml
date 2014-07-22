@@ -70,4 +70,13 @@
         android:title="@string/pref_show_app_icon_title"
         android:summary="@string/pref_show_app_icon_summary" />
 
+    <Preference
+        android:title="@string/pref_submit_title"
+        android:summary="@string/pref_submit_summary">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://docs.google.com/forms/d/1R_jgpNa_uDPB9NVSnKa3dlDLQF2bWDnjJL1RI9kheYM/viewform?usp=send_form"/>
+    </Preference>
+
+
 </PreferenceScreen>
