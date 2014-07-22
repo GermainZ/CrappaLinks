@@ -15,6 +15,8 @@
     <string name="pref_confirm_open_summary">Opýta sa pred otvorením skrátenej adresy.</string>
     <string name="pref_resolve_all_title">Obnoviť všetky adresy</string>
     <string name="pref_resolve_all_summary">Pokúsi sa obnoviť všetky skrátené adresy, aj keď skracovač nie je známy. Vhodné pre vnorené adresy, ale spotrebuje viac prenesených dát.</string>
+    <string name="pref_use_long_url_title">Použiť longurl.org</string>
+    <string name="pref_use_long_url_summary">Obnoviť adresy pomocou LongURL API.</string>
     <string name="pref_show_app_icon_title">Zobraziť ikonu aplikácie</string>
     <string name="pref_show_app_icon_summary">Zrušte pre skrytie ikony tejto aplikácie v menu aplikácií.</string>
     <string name="toast_type_entries_off">VYP</string>
