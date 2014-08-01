@@ -85,7 +85,7 @@ public class Resolver extends Activity {
                     return location;
                 }
                 // It might also be a redirection using meta tags.
-                else {
+                else if (responseCode >= 200 && responseCode < 300 ) {
                     Document d = Jsoup.parse(c.getInputStream(), "UTF-8", url);
                     Elements refresh = d.select("meta[http-equiv=Refresh]");
                     if (!refresh.isEmpty()) {
