@@ -2,6 +2,3 @@
 -optimizations !code/allocation/variable
 
 -keep public class com.germainz.crappalinks.CrappaLinks
-
--libraryjars /home/germain/Downloads/jsoup-1.7.3.jar
--libraryjars /home/germain/Downloads/XposedBridgeApi-36.jar
