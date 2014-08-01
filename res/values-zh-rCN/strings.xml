@@ -2,9 +2,9 @@
 
     <string name="app_name">CrappaLinks</string>
     <string name="pref_support_title">CrappaLinks</string>
-    <string name="pref_support_summary">开发者：GermainZ</string>
+    <string name="pref_support_summary">开发者：GermainZ。点击访问支持页面。</string>
     <string name="pref_xposed_title">Xposed 框架</string>
-    <string name="pref_xposed_summary">本模块使用了由 rovo89 与 Tungstwenty 开发的 Xposed 框架。</string>
+    <string name="pref_xposed_summary">本模块使用由 rovo89 与 Tungstwenty 开发的 Xposed 框架。</string>
     <string name="pref_jsoup_title">jsoup</string>
     <string name="pref_jsoup_summary">由 Jonathan Hedley 开发的 jsoup 的库用于解码短链。</string>
     <string name="pref_unshorten_urls_title">解码短链</string>
@@ -13,8 +13,17 @@
     <string name="pref_toast_type_summary">显示解码超链接的提示框</string>
     <string name="pref_confirm_open_title">解码短链确认</string>
     <string name="pref_confirm_open_summary">打开短链接前要求确认</string>
+    <string name="pref_resolve_all_title">解析所有链接地址</string>
+    <string name="pref_resolve_all_summary">试图解决不会解码未知链接地址的问题。可以很好的解析嵌套链接，但会消耗更多地带宽</string>
+    <string name="pref_use_long_url_title">使用 longurl.org</string>
+    <string name="pref_use_long_url_summary">使用 LongURL API 来解码短链</string>
     <string name="pref_show_app_icon_title">显示启动器图标</string>
     <string name="pref_show_app_icon_summary">禁用以隐藏 CrappaLink 在启动器上的图标</string>
+    <string name="pref_submit_title">提交新链接地址</string>
+    <string name="pref_submit_summary">提交尚未支持的短链服务</string>
+    <string name="category_unshort">解码短链</string>
+    <string name="category_about">关于</string>
+    <string name="category_other">其他</string>
     <string name="toast_type_entries_off">隐藏</string>
     <string name="toast_type_entries_brief">简略（不在提示框中显示解码后的真实链接）</string>
     <string name="toast_type_entries_full">详细（在提示框中显示解码后的真实链接）</string>
@@ -22,7 +31,7 @@
     <string name="toast_message_started">正在解码短链接…</string>
     <string name="toast_message_done">"真实链接："</string>
     <string name="toast_message_error">"出错。请报告并附带调试信息。链接地址："</string>
-    <string name="dialog_confirm_open">您想打开下面的链接吗？\n</string>
+    <string name="dialog_confirm_open">确定打开该链接吗？\n</string>
     <string name="dialog_yes">是</string>
     <string name="dialog_no">否</string>
 
