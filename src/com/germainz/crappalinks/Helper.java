@@ -105,10 +105,15 @@ public class Helper {
         return -1;
     }
 
-    public static URI getURI(String urlString) throws URISyntaxException, MalformedURLException {
-        URL url = new URL(urlString);
-        return new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
-                url.getPath(), url.getQuery(), url.getRef());
+    public static String getAbsoluteUrl(String urlString, String baseUrlString) throws URISyntaxException,
+            MalformedURLException {
+        if (urlString.startsWith("http")) {
+            return urlString;
+        } else {
+            URL url = new URL(baseUrlString);
+            URI baseUri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
+                    url.getPath(), url.getQuery(), url.getRef());
+            return baseUri.resolve(urlString).toString();
+        }
     }
-
 }

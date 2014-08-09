@@ -80,20 +80,18 @@ public class Resolver extends Activity {
                 // If the response code is 3xx, it's a redirection. Return the real location.
                 if (responseCode >= 300 && responseCode < 400) {
                     String location = c.getHeaderField("Location");
-                    if (!Helper.getURI(location).isAbsolute())
-                        return Helper.getURI(url).resolve(location).toString();
-                    return location;
+                    return Helper.getAbsoluteUrl(location, url);
                 }
                 // It might also be a redirection using meta tags.
                 else if (responseCode >= 200 && responseCode < 300 ) {
                     Document d = Jsoup.parse(c.getInputStream(), "UTF-8", url);
-                    Elements refresh = d.select("meta[http-equiv=Refresh]");
+                    Elements refresh = d.select("*:not(noscript) > meta[http-equiv=Refresh]");
                     if (!refresh.isEmpty()) {
                         Element refreshElement = refresh.first();
                         if (refreshElement.hasAttr("url"))
-                            return refreshElement.attr("url");
+                            return Helper.getAbsoluteUrl(refreshElement.attr("url"), url);
                         else if (refreshElement.hasAttr("content") && refreshElement.attr("content").contains("url="))
-                            return refreshElement.attr("content").split("url=")[1].replaceAll("^'|'$", "");
+                            return Helper.getAbsoluteUrl(refreshElement.attr("content").split("url=")[1].replaceAll("^'|'$", ""), url);
                     }
                 }
             } catch (ConnectException | UnknownHostException e) {
