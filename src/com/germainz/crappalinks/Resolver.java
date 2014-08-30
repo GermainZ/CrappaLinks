@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ public class Resolver extends Activity {
 
     private String toastType;
     private boolean confirmOpen;
-    private boolean resolveAll;
+    private String resolveAllWhen;
     private boolean useLongUrl;
     private static final String TOAST_NONE = "0";
     private static final String TOAST_DETAILED = "2";
@@ -41,7 +42,7 @@ public class Resolver extends Activity {
                 Context.MODE_WORLD_READABLE);
         toastType = sharedPreferences.getString("pref_toast_type", TOAST_NONE);
         confirmOpen = sharedPreferences.getBoolean("pref_confirm_open", false);
-        resolveAll = sharedPreferences.getBoolean("pref_resolve_all", false);
+        resolveAllWhen = sharedPreferences.getString("pref_resolve_all_when", "ALWAYS");
         useLongUrl = sharedPreferences.getBoolean("pref_use_long_url", false);
         new ResolveUrl().execute(getIntent().getDataString());
         /* Ideally, this would be a service, but we're redirecting intents via Xposed.
@@ -137,8 +138,9 @@ public class Resolver extends Activity {
             String redirectUrl = urls[0];
 
             // if there's no connection, fail and return the original URL.
-            if (((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE))
-                    .getActiveNetworkInfo() == null) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(
+                    Context.CONNECTIVITY_SERVICE);
+            if (connectivityManager.getActiveNetworkInfo() == null) {
                 noConnectionError = true;
                 return redirectUrl;
             }
@@ -152,10 +154,15 @@ public class Resolver extends Activity {
                 CookieManager cookieManager = new CookieManager();
                 CookieHandler.setDefault(cookieManager);
 
+                // Should we resolve all URLs?
+                boolean resolveAll = true;
+                NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                if (resolveAllWhen.equals("NEVER") || (resolveAllWhen.equals("WIFI_ONLY") && !wifiInfo.isConnected()))
+                    resolveAll = false;
+
                 // Keep trying to resolve the URL until we get a URL that isn't a redirect.
                 String finalUrl = redirectUrl;
-                while (redirectUrl != null &&
-                        ((resolveAll) || (!resolveAll && Helper.isRedirect(Uri.parse(redirectUrl).getHost())))) {
+                while (redirectUrl != null && ((resolveAll) || (Helper.isRedirect(Uri.parse(redirectUrl).getHost())))) {
                     redirectUrl = getRedirect(redirectUrl);
                     if (redirectUrl != null) {
                         // This should avoid infinite loops, just in case.

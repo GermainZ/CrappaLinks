@@ -41,11 +41,11 @@ public class Preferences extends Activity {
             });
 
             CheckBoxPreference prefUseLongUrl = (CheckBoxPreference) findPreference("pref_use_long_url");
-            findPreference("pref_resolve_all").setEnabled(!prefUseLongUrl.isChecked());
+            findPreference("pref_resolve_all_when").setEnabled(!prefUseLongUrl.isChecked());
             prefUseLongUrl.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    findPreference("pref_resolve_all").setEnabled(!(Boolean) newValue);
+                    findPreference("pref_resolve_all_when").setEnabled(!(Boolean) newValue);
                     return true;
                 }
             });

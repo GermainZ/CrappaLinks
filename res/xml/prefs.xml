@@ -34,9 +34,11 @@
             android:summary="@string/pref_use_long_url_summary"
             android:dependency="pref_unshorten_urls" />
 
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="pref_resolve_all"
+        <ListPreference
+            android:defaultValue="ALWAYS"
+            android:key="pref_resolve_all_when"
+            android:entries="@array/resolve_all_entries"
+            android:entryValues="@array/resolve_all_values"
             android:title="@string/pref_resolve_all_title"
             android:summary="@string/pref_resolve_all_summary"
             android:dependency="pref_unshorten_urls" />

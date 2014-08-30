@@ -13,4 +13,15 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="resolve_all_entries">
+        <item>@string/resolve_all_always</item>
+        <item>@string/resolve_all_wifi</item>
+        <item>@string/resolve_all_never</item>
+    </string-array>
+
+    <string-array name="resolve_all_values">
+        <item>ALWAYS</item>
+        <item>WIFI_ONLY</item>
+        <item>NEVER</item>
+    </string-array>
 </resources>
