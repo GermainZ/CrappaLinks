@@ -19,7 +19,7 @@ public class Helper {
             "shar.es", "spr.ly", "v.ht", "v0v.in", "redd.it", "bitly.com", "tl.gd", "wh.gov", "hukd.mydealz.de",
             "untp.i", "kck.st", "engt.co", "nyti.ms", "cnnmon.ie", "vrge.co", "is.gd", "cnn.it", "spon.de",
             "affiliation.appgratuites-network.com", "t.cn", "url.cn", "ht.ly", "po.st", "ohmyyy.gt", "dustn.ws",
-            "glm.io"};
+            "glm.io", "nazr.in", "chip.biz", "ift.tt", "dopice.sk", "phon.es", "buff.ly"};
 
     // Hosts that mask links
     private static final String[] MASK_HOSTS = {"m.facebook.com", "link2.tapatalk.com", "link.tapatalk.com",
