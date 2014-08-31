@@ -27,6 +27,9 @@
     <string name="toast_type_entries_off">VYP</string>
     <string name="toast_type_entries_brief">Stručný (nezobrazí obnovenú adresu)</string>
     <string name="toast_type_entries_full">Plný (zobrazí obnovenú adresu)</string>
+    <string name="resolve_all_always">Vždy</string>
+    <string name="resolve_all_wifi">Iba cez Wi-Fi</string>
+    <string name="resolve_all_never">Nikdy</string>
     <string name="toast_message_network">"Žiadne internetové pripojenie. Nemožno obnoviť adresu: "</string>
     <string name="toast_message_started">Obnovovanie adresy…</string>
     <string name="toast_message_done">"Obnovená adresa: "</string>
