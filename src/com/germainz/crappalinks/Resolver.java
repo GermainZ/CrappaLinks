@@ -97,6 +97,7 @@ public class Resolver extends Activity {
                 }
             } catch (ConnectException | UnknownHostException e) {
                 noConnectionError = true;
+                e.printStackTrace();
             } catch (Exception e) {
                 connectionError = true;
                 e.printStackTrace();
