@@ -38,16 +38,16 @@ public class MaskHost {
                 unmaskedLink = url.getQueryParameter(PARAMETER);
         }
 
-        if (unmaskedLink == null)
-            return url;
-
         return parseUrl(url, unmaskedLink);
     }
 
     /**
      * Resolve relative links if necessary and convert the String URL to a Uri URL.
      */
-    private static Uri parseUrl(Uri originalUrl, String newUrl) {
+    public static Uri parseUrl(Uri originalUrl, String newUrl) {
+        if (newUrl == null)
+            return originalUrl;
+
         try {
             if (!new URI(newUrl).isAbsolute())
                 newUrl= new URI(originalUrl.toString()).resolve(newUrl).toString();

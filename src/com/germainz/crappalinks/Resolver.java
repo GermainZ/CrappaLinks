@@ -81,7 +81,7 @@ public class Resolver extends Activity {
                 // If the response code is 3xx, it's a redirection. Return the real location.
                 if (responseCode >= 300 && responseCode < 400) {
                     String location = c.getHeaderField("Location");
-                    return Helper.getAbsoluteUrl(location, url);
+                    return RedirectHelper.getAbsoluteUrl(location, url);
                 }
                 // It might also be a redirection using meta tags.
                 else if (responseCode >= 200 && responseCode < 300 ) {
@@ -90,9 +90,9 @@ public class Resolver extends Activity {
                     if (!refresh.isEmpty()) {
                         Element refreshElement = refresh.first();
                         if (refreshElement.hasAttr("url"))
-                            return Helper.getAbsoluteUrl(refreshElement.attr("url"), url);
+                            return RedirectHelper.getAbsoluteUrl(refreshElement.attr("url"), url);
                         else if (refreshElement.hasAttr("content") && refreshElement.attr("content").contains("url="))
-                            return Helper.getAbsoluteUrl(refreshElement.attr("content").split("url=")[1].replaceAll("^'|'$", ""), url);
+                            return RedirectHelper.getAbsoluteUrl(refreshElement.attr("content").split("url=")[1].replaceAll("^'|'$", ""), url);
                     }
                 }
             } catch (ConnectException | UnknownHostException e) {
@@ -162,7 +162,7 @@ public class Resolver extends Activity {
 
                 // Keep trying to resolve the URL until we get a URL that isn't a redirect.
                 String finalUrl = redirectUrl;
-                while (redirectUrl != null && ((resolveAll) || (Helper.isRedirect(Uri.parse(redirectUrl).getHost())))) {
+                while (redirectUrl != null && ((resolveAll) || (RedirectHelper.isRedirect(Uri.parse(redirectUrl).getHost())))) {
                     redirectUrl = getRedirect(redirectUrl);
                     if (redirectUrl != null) {
                         // This should avoid infinite loops, just in case.

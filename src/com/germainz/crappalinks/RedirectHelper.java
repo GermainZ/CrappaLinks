@@ -5,7 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-public class Helper {
+public class RedirectHelper {
 
     // Hosts that shorten URLs - we need to follow the redirections to get the real URL for those
     private static final String[] REDIRECT_HOSTS = {"t.co", "youtu.be", "bit.ly", "menea.me", "kcy.me", "goo.gl",
