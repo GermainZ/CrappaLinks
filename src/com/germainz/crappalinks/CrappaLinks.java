@@ -7,6 +7,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -14,9 +17,27 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 
 public class CrappaLinks implements IXposedHookZygoteInit {
-
     private final static XSharedPreferences PREFS = new XSharedPreferences("com.germainz.crappalinks");
     private final static boolean PREF_UNSHORTEN_URLS = PREFS.getBoolean("pref_unshorten_urls", true);
+
+    private static final ArrayList<MaskHost> MASK_HOSTS = new ArrayList<>();
+
+    static {
+        MASK_HOSTS.add(new MaskHost("m.facebook.com", "l.php", "u"));
+        MASK_HOSTS.add(new MaskHost("link.tapatalk.com", null, "out"));
+        MASK_HOSTS.add(new MaskHost("link2.tapatalk.com", null, "url"));
+        MASK_HOSTS.add(new MaskHost("pt.tapatalk.com", "redirect.php", "url"));
+        MASK_HOSTS.add(new MaskHost("google.com", "url", "q"));
+        MASK_HOSTS.add(new MaskHost("vk.com", "away.php", "to"));
+        MASK_HOSTS.add(new MaskHost("click.linksynergy.com", null, "RD_PARM1"));
+        MASK_HOSTS.add(new MaskHost("youtube.com", "attribution_link", "u"));
+        MASK_HOSTS.add(new MaskHost("youtube.com", "attribution_link", "a"));
+        MASK_HOSTS.add(new MaskHost("m.scope.am", "api", "out"));
+        MASK_HOSTS.add(new MaskHost("redirectingat.com", "rewrite.php", "url"));
+        MASK_HOSTS.add(new MaskHost("jdoqocy.com", null, "api"));
+        MASK_HOSTS.add(new MaskHost("viglink.com", "api", "out"));
+        MASK_HOSTS.add(new MaskHost("getpocket.com", "redirect", "url"));
+    }
 
     public void initZygote(StartupParam startupParam) throws Throwable {
         XC_MethodHook hook = new XC_MethodHook() {
@@ -37,13 +58,13 @@ public class CrappaLinks implements IXposedHookZygoteInit {
                 // Unmask the URL (nested masked URLs, too.)
                 Uri unmaskedUrl = intentData;
                 Uri finalUrl = unmaskedUrl;
-                int i = Helper.getMaskedId(unmaskedUrl);
-                while (i >= 0) {
-                    unmaskedUrl = Helper.unmaskLink(unmaskedUrl, i);
+                MaskHost maskHost = getMaskedUrlMaskHost(unmaskedUrl);
+                while (maskHost != null) {
+                    unmaskedUrl = maskHost.unmaskLink(unmaskedUrl);
                     if (unmaskedUrl.equals(finalUrl))
                         break;
                     finalUrl = unmaskedUrl;
-                    i = Helper.getMaskedId(unmaskedUrl);
+                    maskHost = getMaskedUrlMaskHost(unmaskedUrl);
                 }
 
                 // Does the URL need to be unshortened?
@@ -70,7 +91,27 @@ public class CrappaLinks implements IXposedHookZygoteInit {
             findAndHookMethod("android.app.ContextImpl", null, "startActivity", Intent.class, hook);
             findAndHookMethod(Activity.class, "startActivity", Intent.class, hook);
         }
-
     }
 
+
+    /**
+     * Return the appropriate MaskHost or null if the URL's host isn't a known URL masker.
+     */
+    public static MaskHost getMaskedUrlMaskHost(Uri uri) {
+        String host = uri.getHost();
+        for (MaskHost maskHost : MASK_HOSTS) {
+            if (host.endsWith(maskHost.URL)) {
+                if (maskHost.SEGMENT == null) {
+                    return maskHost;
+                } else {
+                    List pathSegments = uri.getPathSegments();
+                    if (pathSegments == null)
+                        return null;
+                    if (pathSegments.size() > 0 && maskHost.SEGMENT.equals(pathSegments.get(0)))
+                        return maskHost;
+                }
+            }
+        }
+        return null;
+    }
 }
