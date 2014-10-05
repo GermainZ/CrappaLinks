@@ -6,7 +6,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +42,32 @@ public class CrappaLinks implements IXposedHookZygoteInit {
         MASK_HOSTS.add(new MaskHost("jdoqocy.com", null, "api"));
         MASK_HOSTS.add(new MaskHost("viglink.com", "api", "out"));
         MASK_HOSTS.add(new MaskHost("getpocket.com", "redirect", "url"));
+        MASK_HOSTS.add(new MaskHost("news.google.com", "news", "url"));
+
+        // Special hosts below.
+        MASK_HOSTS.add(new MaskHost("mandrillapp.com", "track", "p") {
+            @Override
+            public Uri unmaskLink(Uri url) {
+                String b64data = null;
+                List pathSegments = url.getPathSegments();
+                if (pathSegments == null) return url;
+                if (pathSegments.size() > 0 && SEGMENT.equals(pathSegments.get(0)))
+                    b64data = url.getQueryParameter(PARAMETER) + "==";
+                if (b64data == null) return url;
+                String unmaskedLink;
+                try {
+                    String b64Decoded = new String(Base64.decode(b64data, Base64.URL_SAFE), "UTF-8");
+                    JSONObject jsonObject = new JSONObject(b64Decoded);
+                    String p = jsonObject.getString("p");
+                    JSONObject jsonObject2 = new JSONObject(p);
+                    unmaskedLink = jsonObject2.getString("url");
+                } catch (JSONException | UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                    return url;
+                }
+                return MaskHost.parseUrl(url, unmaskedLink);
+            }
+        });
     }
 
     public void initZygote(StartupParam startupParam) throws Throwable {
