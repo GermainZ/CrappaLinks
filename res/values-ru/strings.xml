@@ -26,4 +26,11 @@
     <string name="dialog_confirm_open">Хотите открыть этот URL?\n</string>
     <string name="dialog_yes">Да</string>
     <string name="dialog_no">Нет</string>
+    <string name="pref_use_long_url_title">Использовать longurl.org</string>
+    <string name="pref_use_long_url_summary">Распаковывать URL, используя LongURL API</string>
+    <string name="pref_submit_title">Добавить новые URL</string>
+    <string name="pref_submit_summary">Добавить новые укорачиватели URL</string>
+    <string name="category_unshort">Основное</string>
+    <string name="category_about">О программе</string>
+    <string name="category_other">Прочее</string>
 </resources>
