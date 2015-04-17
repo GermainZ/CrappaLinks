@@ -43,6 +43,7 @@ public class CrappaLinks implements IXposedHookZygoteInit {
         MASK_HOSTS.add(new MaskHost("viglink.com", "api", "out"));
         MASK_HOSTS.add(new MaskHost("getpocket.com", "redirect", "url"));
         MASK_HOSTS.add(new MaskHost("news.google.com", "news", "url"));
+        MASK_HOSTS.add(new MaskHost("dealabs.com", "url", "e"));
 
         // Special hosts below.
         MASK_HOSTS.add(new MaskHost("mandrillapp.com", "track", "p") {
