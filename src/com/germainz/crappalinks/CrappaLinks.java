@@ -75,10 +75,11 @@ public class CrappaLinks implements IXposedHookZygoteInit {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 Intent intent = (Intent) param.args[0];
+                if (intent == null) return;
 
                 // We're only interested in ACTION_VIEW intents.
                 String intentAction = intent.getAction();
-                if (intentAction == null || !intentAction.equals("android.intent.action.VIEW"))
+                if (intentAction == null || !Intent.ACTION_VIEW.equals(intentAction))
                     return;
 
                 // If the data isn't a URL (http/https) do nothing.
