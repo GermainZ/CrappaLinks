@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -31,10 +32,10 @@ public class Resolver extends Activity {
     private String toastType;
     private boolean confirmOpen;
     private String resolveAllWhen;
-    private boolean useLongUrl;
+    private boolean useUnshortenIt;
     private static final String TOAST_NONE = "0";
     private static final String TOAST_DETAILED = "2";
-    private static final String LONG_URL_BASE_URL = "http://api.longurl.org/v2/expand?format=json&title=1&url=";
+    private static final String UNSHORTEN_IT_API_KEY = "UcWGkhtMFdM4019XeI8lgfNOk875RL7K";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +44,8 @@ public class Resolver extends Activity {
         toastType = sharedPreferences.getString("pref_toast_type", TOAST_NONE);
         confirmOpen = sharedPreferences.getBoolean("pref_confirm_open", false);
         resolveAllWhen = sharedPreferences.getString("pref_resolve_all_when", "ALWAYS");
-        useLongUrl = sharedPreferences.getBoolean("pref_use_long_url", false);
+        // Still called pref_use_long_url for backwards compatibility, as we used to use longurl.org instead.
+        useUnshortenIt = sharedPreferences.getBoolean("pref_use_long_url", false);
         new ResolveUrl().execute(getIntent().getDataString());
         /* Ideally, this would be a service, but we're redirecting intents via Xposed.
          * We finish the activity immediately so that the user can still interact with the
@@ -111,17 +113,29 @@ public class Resolver extends Activity {
         private String getRedirectUsingLongURL(String url) {
             HttpURLConnection c = null;
             try {
-                c = (HttpURLConnection) new URL(LONG_URL_BASE_URL + url).openConnection();
+                // http://unshorten.it/api/documentation
+                Uri.Builder builder = new Uri.Builder();
+                builder.scheme("http").authority("api.unshorten.it").appendQueryParameter("shortURL", url)
+                        .appendQueryParameter("responseFormat", "json").appendQueryParameter("apiKey", UNSHORTEN_IT_API_KEY);
+                String requestUrl = builder.build().toString();
+                c = (HttpURLConnection) new URL(requestUrl).openConnection();
                 c.setRequestProperty("User-Agent", "CrappaLinks");
                 c.setConnectTimeout(10000);
                 c.setReadTimeout(15000);
                 c.connect();
                 final int responseCode = c.getResponseCode();
                 if (responseCode == 200) {
-                    // Response format: {"long-url": "URL"}
+                    // Response format: {"fullurl": "URL"}
                     JSONObject jsonObject = new JSONObject(new BufferedReader(
                             new InputStreamReader(c.getInputStream())).readLine());
-                    return jsonObject.getString("long-url");
+                    if (jsonObject.has("error")) {
+                        connectionError = true;
+                        Log.e("CrappaLinks", requestUrl);
+                        Log.e("CrappaLinks", jsonObject.toString());
+                        return url;
+                    } else {
+                        return jsonObject.getString("fullurl");
+                    }
                 }
             } catch (ConnectException | UnknownHostException e) {
                 noConnectionError = true;
@@ -146,7 +160,7 @@ public class Resolver extends Activity {
                 return redirectUrl;
             }
 
-            if (useLongUrl) {
+            if (useUnshortenIt) {
                 return getRedirectUsingLongURL(redirectUrl);
             } else {
                 HttpURLConnection.setFollowRedirects(false);

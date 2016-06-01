@@ -16,8 +16,9 @@
     <string name="pref_resolve_all_title">Resolve All URLs</string>
     <string name="pref_resolve_all_summary">Try to resolve all URLs instead of stopping if the host isn\'t a known
         shortener. Useful for nested URLs, but consumes more bandwidth</string>
-    <string name="pref_use_long_url_title">Use longurl.org</string>
-    <string name="pref_use_long_url_summary">Unshorten URLs using the LongURL API</string>
+    <!--We used to use longurl.org, hence the preferences' names-->
+    <string name="pref_use_long_url_title">Use Unshorten.It!</string>
+    <string name="pref_use_long_url_summary">Unshorten URLs using the Unshorten.It! API</string>
     <string name="pref_show_app_icon_title">Show launcher icon</string>
     <string name="pref_show_app_icon_summary">Disable to hide CrappaLink\'s launcher icon</string>
     <string name="pref_submit_title">Submit new URLs</string>
