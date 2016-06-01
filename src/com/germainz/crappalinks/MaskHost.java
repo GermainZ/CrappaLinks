@@ -6,7 +6,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
-import java.util.List;
 
 public class MaskHost {
     public String URL;
@@ -24,18 +23,22 @@ public class MaskHost {
      */
     public Uri unmaskLink(Uri url) {
         String unmaskedLink = null;
-        List pathSegments;
+        String path;
         if (SEGMENT == null) {
             // The host always masks, no need to determine if it's the right segment
             unmaskedLink = url.getQueryParameter(PARAMETER);
         } else {
             // Only a certain segment is used to mask URLs. Determine if this is it.
-            pathSegments = url.getPathSegments();
-            if (pathSegments == null)
-                return url;
+            path = url.getPath();
+            if (path == null) return url;
             // If it is, unmask the URL.
-            if (pathSegments.size() > 0 && SEGMENT.equals(pathSegments.get(0)))
-                unmaskedLink = url.getQueryParameter(PARAMETER);
+            if (path.length() > 0 && path.startsWith(SEGMENT)) {
+                if (PARAMETER == null)
+                    unmaskedLink = String.format("%s://%s", url.getScheme(),
+                            url.getPath().substring(SEGMENT.length()));
+                else
+                    unmaskedLink = url.getQueryParameter(PARAMETER);
+            }
         }
 
         return parseUrl(url, unmaskedLink);

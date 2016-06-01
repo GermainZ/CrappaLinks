@@ -28,23 +28,37 @@ public class CrappaLinks implements IXposedHookZygoteInit {
     private static final ArrayList<MaskHost> MASK_HOSTS = new ArrayList<>();
 
     static {
-        MASK_HOSTS.add(new MaskHost("m.facebook.com", "l.php", "u"));
+        MASK_HOSTS.add(new MaskHost("facebook.com", "/l.php", "u"));
         MASK_HOSTS.add(new MaskHost("link.tapatalk.com", null, "out"));
         MASK_HOSTS.add(new MaskHost("link2.tapatalk.com", null, "url"));
-        MASK_HOSTS.add(new MaskHost("pt.tapatalk.com", "redirect.php", "url"));
-        MASK_HOSTS.add(new MaskHost("google.com", "url", "q"));
-        MASK_HOSTS.add(new MaskHost("vk.com", "away.php", "to"));
-        MASK_HOSTS.add(new MaskHost("click.linksynergy.com", null, "RD_PARM1"));
-        MASK_HOSTS.add(new MaskHost("youtube.com", "attribution_link", "u"));
-        MASK_HOSTS.add(new MaskHost("youtube.com", "attribution_link", "a"));
-        MASK_HOSTS.add(new MaskHost("m.scope.am", "api", "out"));
-        MASK_HOSTS.add(new MaskHost("redirectingat.com", "rewrite.php", "url"));
+        MASK_HOSTS.add(new MaskHost("pt.tapatalk.com", "/redirect.php", "url"));
+        MASK_HOSTS.add(new MaskHost("google.com", "/url/", "q"));
+        MASK_HOSTS.add(new MaskHost("google.com", "/url", "url"));
+        MASK_HOSTS.add(new MaskHost("vk.com", "/away.php", "to"));
+        MASK_HOSTS.add(new MaskHost("click.linksynergy.com/", null, "RD_PARM1"));
+        MASK_HOSTS.add(new MaskHost("youtube.com", "/attribution_link/", "u"));
+        MASK_HOSTS.add(new MaskHost("youtube.com", "/attribution_link/", "a"));
+        MASK_HOSTS.add(new MaskHost("m.scope.am", "/api/", "out"));
+        MASK_HOSTS.add(new MaskHost("redirectingat.com", "/rewrite.php", "url"));
         MASK_HOSTS.add(new MaskHost("jdoqocy.com", null, "api"));
-        MASK_HOSTS.add(new MaskHost("viglink.com", "api", "out"));
-        MASK_HOSTS.add(new MaskHost("getpocket.com", "redirect", "url"));
-        MASK_HOSTS.add(new MaskHost("news.google.com", "news", "url"));
+        MASK_HOSTS.add(new MaskHost("viglink.com", "/api/", "out"));
+        MASK_HOSTS.add(new MaskHost("redirect.viglink.com", null, "out"));
+        MASK_HOSTS.add(new MaskHost("getpocket.com", "/redirect/", "url"));
+        MASK_HOSTS.add(new MaskHost("news.google.com", "/news/", "url"));
+        MASK_HOSTS.add(new MaskHost("go.theregister.com", "/feed/", null));
+        MASK_HOSTS.add(new MaskHost("securitylab.ru", "/bitrix/exturl.php", "goto"));
+        MASK_HOSTS.add(new MaskHost("securitylab.ru", "/bitrix/rk.php", "goto"));
+        MASK_HOSTS.add(new MaskHost("saviry.co", "/m", "u"));
+        MASK_HOSTS.add(new MaskHost("ibnads.xl.co.id", "/ads-request", "a"));
+        MASK_HOSTS.add(new MaskHost("googleadservices.com", "/pagead/aclk", "adurl"));
 
         // Special hosts below.
+        MASK_HOSTS.add(new MaskHost("redd.it", null, null) {
+            @Override
+            public Uri unmaskLink(Uri url) {
+                return url.buildUpon().authority("reddit.com").build();
+            }
+        });
         MASK_HOSTS.add(new MaskHost("mandrillapp.com", "track", "p") {
             @Override
             public Uri unmaskLink(Uri url) {
@@ -136,10 +150,9 @@ public class CrappaLinks implements IXposedHookZygoteInit {
                 if (maskHost.SEGMENT == null) {
                     return maskHost;
                 } else {
-                    List pathSegments = uri.getPathSegments();
-                    if (pathSegments == null)
-                        return null;
-                    if (pathSegments.size() > 0 && maskHost.SEGMENT.equals(pathSegments.get(0)))
+                    String path = uri.getPath();
+                    if (path == null) return null;
+                    if (path.length() > 0 && path.startsWith(maskHost.SEGMENT))
                         return maskHost;
                 }
             }
