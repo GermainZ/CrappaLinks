@@ -15,7 +15,7 @@ public class RedirectHelper {
             "untp.i", "kck.st", "engt.co", "nyti.ms", "cnnmon.ie", "vrge.co", "is.gd", "cnn.it", "spon.de",
             "affiliation.appgratuites-network.com", "t.cn", "url.cn", "ht.ly", "po.st", "ohmyyy.gt", "dustn.ws",
             "glm.io", "nazr.in", "chip.biz", "ift.tt", "dopice.sk", "phon.es", "buff.ly", "htn.to", "trib.al",
-            "mhlthm.ag", "nerdi.st", "pulse.me", "y2u.be", "feedproxy.google.com", "mdk.to"};
+            "mhlthm.ag", "nerdi.st", "pulse.me", "y2u.be", "feedproxy.google.com", "mdk.to", "shar.as"};
 
     /**
      * Return true if the host is a known URL shortener
