@@ -11,11 +11,14 @@ public class RedirectHelper {
     private static final String[] REDIRECT_HOSTS = {"t.co", "youtu.be", "bit.ly", "menea.me", "kcy.me", "goo.gl",
             "ow.ly", "j.mp", "redes.li", "dlvr.it", "tinyurl.com", "tmblr.co", "reut.rs", "sns.mx", "wp.me", "4sq.com",
             "ed.cl", "huff.to", "mun.do", "cos.as", "flip.it", "amzn.to", "cort.as", "on.cnn.com", "fb.me",
-            "shar.es", "spr.ly", "v.ht", "v0v.in", "redd.it", "bitly.com", "tl.gd", "wh.gov", "hukd.mydealz.de",
+            "shar.es", "spr.ly", "v.ht", "v0v.in", "bitly.com", "tl.gd", "wh.gov", "hukd.mydealz.de",
             "untp.i", "kck.st", "engt.co", "nyti.ms", "cnnmon.ie", "vrge.co", "is.gd", "cnn.it", "spon.de",
             "affiliation.appgratuites-network.com", "t.cn", "url.cn", "ht.ly", "po.st", "ohmyyy.gt", "dustn.ws",
             "glm.io", "nazr.in", "chip.biz", "ift.tt", "dopice.sk", "phon.es", "buff.ly", "htn.to", "trib.al",
-            "mhlthm.ag", "nerdi.st", "pulse.me", "y2u.be", "feedproxy.google.com", "mdk.to"};
+            "mhlthm.ag", "nerdi.st", "pulse.me", "y2u.be", "feedproxy.google.com", "mdk.to", "ppt.cc",
+            "feeds.gawker.com", "tinylinks.co", "vk.cc", "rch.lt", "mynt.to", "brt.st", "kom.ps", "urly.fi",
+            "qklnk.co", "hec.su", "tr.im", "qr.ae", "full.sc", "smo.sh", "bit.do", "shar.as", "email.ifttt.com"
+    };
 
     /**
      * Return true if the host is a known URL shortener
