@@ -1,27 +1,26 @@
-import proguard.gradle.ProGuardTask
-
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.android.tools.build:gradle:2.1.0'
     }
 }
 apply plugin: 'com.android.application'
 
 dependencies {
-    provided files('libs/XposedBridgeApi-54.jar')
-    compile 'org.jsoup:jsoup:1.7.3'
+    provided 'de.robv.android.xposed:api:82'
+    provided 'de.robv.android.xposed:api:82:sources'
+    compile 'org.jsoup:jsoup:1.9.2'
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "20.0.0"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
 
     buildTypes {
         release {
-            runProguard true
+            minifyEnabled true
             proguardFile 'proguard.txt'
         }
     }
@@ -62,6 +61,6 @@ android {
 
 allprojects {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 }
