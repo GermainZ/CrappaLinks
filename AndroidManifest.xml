@@ -4,7 +4,7 @@
     android:versionName="2.8">
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="14"
         android:targetSdkVersion="23" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -40,7 +40,7 @@
             android:exported="true"/>
         <activity
             android:name="com.germainz.crappalinks.ConfirmDialog"
-            android:theme="@android:style/Theme.Holo.Dialog"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"
             android:excludeFromRecents="true" />
 
         <meta-data
