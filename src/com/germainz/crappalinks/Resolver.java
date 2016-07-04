@@ -73,21 +73,30 @@ public class Resolver extends Activity {
         }
 
         private String getRedirect(String url) {
-            HttpURLConnection c = null;
+            // Used for HEAD request
+            HttpURLConnection c1 = null;
+            // Used for GET request
+            HttpURLConnection c2 = null;
             try {
-                c = (HttpURLConnection) new URL(url).openConnection();
-                c.setConnectTimeout(10000);
-                c.setReadTimeout(15000);
-                c.connect();
-                final int responseCode = c.getResponseCode();
+                c1 = (HttpURLConnection) new URL(url).openConnection();
+                c1.setConnectTimeout(10000);
+                c1.setReadTimeout(15000);
+                // Spare some time in case of a 3xx response code
+                c1.setRequestMethod("HEAD");
+                c1.connect();
+                final int responseCode = c1.getResponseCode();
                 // If the response code is 3xx, it's a redirection. Return the real location.
                 if (responseCode >= 300 && responseCode < 400) {
-                    String location = c.getHeaderField("Location");
+                    String location = c1.getHeaderField("Location");
                     return RedirectHelper.getAbsoluteUrl(location, url);
                 }
                 // It might also be a redirection using meta tags.
                 else if (responseCode >= 200 && responseCode < 300 ) {
-                    Document d = Jsoup.parse(c.getInputStream(), "UTF-8", url);
+                    c2 = (HttpURLConnection) new URL(url).openConnection();
+                    c2.setConnectTimeout(10000);
+                    c2.setReadTimeout(15000);
+                    c2.connect();
+                    Document d = Jsoup.parse(c2.getInputStream(), "UTF-8", url);
                     Elements refresh = d.select("*:not(noscript) > meta[http-equiv=Refresh]");
                     if (!refresh.isEmpty()) {
                         Element refreshElement = refresh.first();
@@ -104,8 +113,10 @@ public class Resolver extends Activity {
                 connectionError = true;
                 e.printStackTrace();
             } finally {
-                if (c != null)
-                    c.disconnect();
+                if (c1 != null)
+                    c1.disconnect();
+                if (c2 != null)
+                    c2.disconnect();
             }
             return null;
         }
